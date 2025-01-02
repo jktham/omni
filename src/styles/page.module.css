@@ -1,0 +1,12 @@
+.page {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.page > main {
+	width: 100%;
+	height: calc(100vh - 4rem);
+	overflow: scroll;
+}
