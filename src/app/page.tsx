@@ -7,10 +7,18 @@ import Stats from "@/components/stats";
 import Settings from "@/components/settings";
 import Navbar from "@/components/navbar";
 import styles from "@/styles/page.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
-	const [page, setPage] = useState<string>("home");
+	const [page, setPage] = useState<string>("");
+
+	useEffect(() => {
+		setPage(localStorage.getItem("page") || "home");
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("page", page);
+	}, [page]);
 
 	return (
 		<div className={styles.page}>
