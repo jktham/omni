@@ -9,14 +9,15 @@
 	background-color: blue;
 }
 
-.navbar > button {
+.navbar > a {
 	width: 6rem;
 	height: 3rem;
-	border: none;
-	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	background-color: red;
 }
 
-.navbar > button.active {
+.navbar > a.active {
 	background-color: orange;
 }

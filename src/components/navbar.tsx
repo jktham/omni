@@ -1,24 +1,27 @@
 import styles from "@/styles/navbar.module.css";
-import { SetStateAction } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function Navbar({page, setPage}: {page: string; setPage: React.Dispatch<SetStateAction<string>>}) {
+export default function Navbar() {
+	const path = usePathname();
+
 	return (
 		<nav className={styles.navbar}>
-			<button className={page == "home" ? styles.active : ""} onClick={() => setPage("home")}>
+			<Link className={path == "/home" ? styles.active : ""} href="/home">
 				Home
-			</button>
-			<button className={page == "calendar" ? styles.active : ""} onClick={() => setPage("calendar")}>
+			</Link>
+			<Link className={path == "/calendar" ? styles.active : ""} href="/calendar">
 				Calendar
-			</button>
-			<button className={page == "edit" ? styles.active : ""} onClick={() => setPage("edit")}>
+			</Link>
+			<Link className={path == "/edit" ? styles.active : ""} href="/edit">
 				Edit
-			</button>
-			<button className={page == "stats" ? styles.active : ""} onClick={() => setPage("stats")}>
+			</Link>
+			<Link className={path == "/stats" ? styles.active : ""} href="/stats">
 				Stats
-			</button>
-			<button className={page == "settings" ? styles.active : ""} onClick={() => setPage("settings")}>
+			</Link>
+			<Link className={path == "/settings" ? styles.active : ""} href="/settings">
 				Settings
-			</button>
+			</Link>
 		</nav>
 	);
 }

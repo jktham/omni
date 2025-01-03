@@ -5,21 +5,21 @@ function dateToString(date: Date) {
 }
 
 export default function Calendar() {
-	let now = new Date();
-	let currentYear = now.getFullYear();
+	const now = new Date();
+	const currentYear = now.getFullYear();
 
-	let days: string[] = [];
-	let date = new Date(currentYear-4, 0);
+	const days: string[] = [];
+	const date = new Date(currentYear-4, 0);
 	while (date.getFullYear() <= currentYear) {
 		days.push(dateToString(date));
 		date.setDate(date.getDate() + 1);
 	}
 
-	let cal: Map<string, Map<string, string[]>> = new Map();
-	for (let day of days) {
-		let y = day.split("-")[0];
-		let m = day.split("-")[1];
-		let d = day.split("-")[2];
+	const cal: Map<string, Map<string, string[]>> = new Map();
+	for (const day of days) {
+		const y = day.split("-")[0];
+		const m = day.split("-")[1];
+		const d = day.split("-")[2];
 		cal.set(y, (cal.get(y) || new Map()).set(m, [...cal.get(y)?.get(m) || [], d]));
 	}
 
