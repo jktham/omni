@@ -2,5 +2,26 @@
 	width: 100%;
 	height: 100%;
 	display: flex;
-	background-color: darkorange;
+	flex-direction: column;
+}
+
+.titleBar {
+	width: 100%;
+	height: 10rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.title {
+	font-size: 3rem;
+}
+
+.prev, .next {
+	width: 4rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

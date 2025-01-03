@@ -7,19 +7,19 @@ export default function Navbar() {
 
 	return (
 		<nav className={styles.navbar}>
-			<Link className={path == "/home" ? styles.active : ""} href="/home">
+			<Link className={`${styles.navlink} ${path == "/home" ? styles.active : ""}`} href="/home">
 				Home
 			</Link>
-			<Link className={path == "/calendar" ? styles.active : ""} href="/calendar">
+			<Link className={`${styles.navlink} ${path == "/calendar" ? styles.active : ""}`} href="/calendar">
 				Calendar
 			</Link>
-			<Link className={path == "/edit" ? styles.active : ""} href="/edit">
+			<Link className={`${styles.navlink} ${path == "/edit" ? styles.active : ""}`} href="/edit">
 				Edit
 			</Link>
-			<Link className={path == "/stats" ? styles.active : ""} href="/stats">
+			<Link className={`${styles.navlink} ${path == "/stats" ? styles.active : ""}`} href="/stats">
 				Stats
 			</Link>
-			<Link className={path == "/settings" ? styles.active : ""} href="/settings">
+			<Link className={`${styles.navlink} ${path == "/settings" ? styles.active : ""}`} href="/settings">
 				Settings
 			</Link>
 		</nav>

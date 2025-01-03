@@ -1,8 +1,5 @@
 import styles from "@/styles/calendar.module.css";
-
-function dateToString(date: Date) {
-	return `${date.getFullYear()}-${("0" + (date.getMonth()+1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
-}
+import { dateToString } from "@/utils/dateUtils";
 
 export default function Calendar() {
 	const now = new Date();
@@ -30,9 +27,9 @@ export default function Calendar() {
 					{Array.from(months).map(([m, days]) =>
 						<div className={styles.month} key={`${y}-${m}`}>
 							{days.map((d) =>
-								<div className={styles.day} key={`${y}-${m}-${d}`} onClick={() => console.log(`${y}-${m}-${d}`)}>
-									{dateToString(now) == `${y}-${m}-${d}` ? `${d}` : ""}
-								</div>
+								<a className={`${styles.day} ${dateToString(now) == `${y}-${m}-${d}` ? styles.active : ""}`} key={`${y}-${m}-${d}`} href={`/edit?date=${y}-${m}-${d}`}>
+									{d}
+								</a>
 							)}
 						</div>
 					)}
