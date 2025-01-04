@@ -7,6 +7,6 @@
 
 .page > main {
 	width: 100%;
-	height: calc(100vh - 4rem);
-	overflow: scroll;
+	height: 100%;
+	overflow-y: auto;
 }

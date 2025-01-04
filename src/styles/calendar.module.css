@@ -1,25 +1,29 @@
 .calendar {
+	width: 100%;
+	height: 100%;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	align-items: center;
 	gap: 1rem;
+	padding: 2rem;
+	overflow-y: scroll;
 }
 
 .year {
-	max-width: 59rem;
+	max-width: 60rem;
+	margin: auto;
 	display: flex;
 	flex-direction: column;
 }
 
 .yearTitle {
 	font-size: 3rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-right: auto;
+	text-align: left;
 }
 
 .months {
+	width: auto;
+	height: 100%;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -27,7 +31,9 @@
 }
 
 .month {
-	max-width: 14rem;
+	flex-basis: 14rem;
+	flex-grow: 1;
+	aspect-ratio: 1.5;
 	display: flex;
 	flex-direction: column;
 	background-color: var(--bg2);
@@ -35,13 +41,12 @@
 
 .monthTitle {
 	font-size: 2rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	margin-right: auto;
 }
 
 .days {
+	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -49,12 +54,13 @@
 }
 
 .day {
-	width: 2rem;
-	height: 2rem;
+	width: 14.286%;
+	height: 20%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border: 1px solid var(--bg3);
+	scroll-margin-top: 10rem;
 }
 
 .day.active {
