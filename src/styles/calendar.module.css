@@ -2,11 +2,24 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 2rem;
+	gap: 1rem;
 }
 
 .year {
 	max-width: 59rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.yearTitle {
+	font-size: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: auto;
+}
+
+.months {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -16,6 +29,20 @@
 .month {
 	max-width: 14rem;
 	display: flex;
+	flex-direction: column;
+	background-color: var(--bg2);
+}
+
+.monthTitle {
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: auto;
+}
+
+.days {
+	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-content: flex-start;
@@ -24,14 +51,12 @@
 .day {
 	width: 2rem;
 	height: 2rem;
-	border: 1px solid var(--bg3);
-	overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: var(--bg2);
+	border: 1px solid var(--bg3);
 }
 
 .day.active {
-	background-color: var(--bg3);
+	border: 1px solid var(--fg);
 }

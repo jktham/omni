@@ -14,3 +14,20 @@ export function dateOffset(dateString: string, offset: number) {
 	date.setDate(date.getDate() + offset);
 	return dateToString(date);
 }
+
+export function generateCalendar(startYear: number, endYear: number) {
+	const days: string[] = [];
+	const date = new Date(startYear, 0);
+	while (date.getFullYear() <= endYear) {
+		days.push(dateToString(date));
+		date.setDate(date.getDate() + 1);
+	}
+	const cal: Map<string, Map<string, string[]>> = new Map();
+	for (const day of days) {
+		const y = day.split("-")[0];
+		const m = day.split("-")[1];
+		const d = day.split("-")[2];
+		cal.set(y, (cal.get(y) || new Map()).set(m, [...cal.get(y)?.get(m) || [], d]));
+	}
+	return cal;
+}
