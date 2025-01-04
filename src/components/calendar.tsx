@@ -21,7 +21,7 @@ export default function Calendar() {
 	}, []);
 
 	useEffect(() => {
-		if (activeDay.current) activeDay.current.scrollIntoView({block: "start"});
+		if (activeDay.current) activeDay.current.scrollIntoView({block: "start", behavior: "smooth"});
 	});
 
 	return (

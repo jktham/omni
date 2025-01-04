@@ -1,22 +1,32 @@
 .navbar {
 	width: 100%;
-	height: 5rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
 	gap: 1rem;
+	padding: 1rem;
 }
 
 .navlink {
-	width: 6rem;
-	height: 3rem;
+	flex-basis: 4rem;
+	max-width: 4rem;
+	aspect-ratio: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-color: var(--bg2);
+	overflow: hidden;
 }
 
 .navlink.active {
 	background-color: var(--bg3);
+}
+
+.navlink > span {
+	font-size: 2rem;
+}
+
+.navlink.active > span {
+	color: cornflowerblue;
 }

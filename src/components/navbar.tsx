@@ -16,19 +16,19 @@ export default function Navbar() {
 	return (
 		<nav className={styles.navbar}>
 			<Link className={`${styles.navlink} ${path == "/home" ? styles.active : ""}`} href="/home">
-				Home
+				<span className="material-symbols-outlined">home</span>
 			</Link>
 			<Link className={`${styles.navlink} ${path == "/calendar" ? styles.active : ""}`} href="/calendar">
-				Calendar
+				<span className="material-symbols-outlined">calendar_month</span>
 			</Link>
-			<Link className={`${styles.navlink} ${path == "/edit" ? styles.active : ""}`} href={`/edit/${date}`}>
-				Edit
+			<Link className={`${styles.navlink} ${path.split("/")[1] == "edit" ? styles.active : ""}`} href={`/edit/${date}`}>
+				<span className="material-symbols-outlined">edit_square</span>
 			</Link>
 			<Link className={`${styles.navlink} ${path == "/stats" ? styles.active : ""}`} href="/stats">
-				Stats
+				<span className="material-symbols-outlined">bar_chart</span>
 			</Link>
 			<Link className={`${styles.navlink} ${path == "/settings" ? styles.active : ""}`} href="/settings">
-				Settings
+				<span className="material-symbols-outlined">settings</span>
 			</Link>
 		</nav>
 	);

@@ -26,3 +26,9 @@ export function setLocalEntry(date: string, entry: Entry) {
 	data.set(date, entry);
 	setLocalData(data);
 }
+
+export function deleteLocalEntry(date: string) {
+	const data = getLocalData();
+	data.delete(date);
+	setLocalData(data);
+}
