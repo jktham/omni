@@ -1,9 +1,17 @@
 import styles from "@/styles/navbar.module.css";
+import { dateToString } from "@/utils/dateUtils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
 	const path = usePathname();
+
+	const [date, setDate] = useState<string>("2000-01-01");
+
+	useEffect(() => {
+		setDate(dateToString(new Date()));
+	}, []);
 
 	return (
 		<nav className={styles.navbar}>
@@ -13,7 +21,7 @@ export default function Navbar() {
 			<Link className={`${styles.navlink} ${path == "/calendar" ? styles.active : ""}`} href="/calendar">
 				Calendar
 			</Link>
-			<Link className={`${styles.navlink} ${path == "/edit" ? styles.active : ""}`} href="/edit">
+			<Link className={`${styles.navlink} ${path == "/edit" ? styles.active : ""}`} href={`/edit/${date}`}>
 				Edit
 			</Link>
 			<Link className={`${styles.navlink} ${path == "/stats" ? styles.active : ""}`} href="/stats">

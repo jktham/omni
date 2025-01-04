@@ -15,10 +15,10 @@ export function dateOffset(dateString: string, offset: number) {
 	return dateToString(date);
 }
 
-export function generateCalendar(startYear: number, endYear: number) {
+export function generateCalendar(startYear: number, endYear?: number) {
 	const days: string[] = [];
 	const date = new Date(startYear, 0);
-	while (date.getFullYear() <= endYear) {
+	while (date.getFullYear() <= (endYear || startYear)) {
 		days.push(dateToString(date));
 		date.setDate(date.getDate() + 1);
 	}
