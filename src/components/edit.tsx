@@ -21,7 +21,7 @@ export default function Edit({date}: {date: string}) {
 	};
 
 	useEffect(() => {
-		if (rating != -1) saveEntry();
+		if (rating != -1 || notes != "") saveEntry();
 	});
 
 	useEffect(() => {

@@ -8,10 +8,10 @@ import { use, useEffect, useState } from "react";
 
 export default function Page({params}: {params: Promise<{ date: string[] | undefined }>}) {
 	const p = use(params);
-	const [date, setDate] = useState<string>(p.date?.[0] || "2025-01-01");
+	const [date, setDate] = useState<string>(p.date?.[0] || "2000-01-01");
 
 	useEffect(() => {
-		if (date == "2025-01-01") setDate(dateToString(new Date()));
+		if (date == "2000-01-01") setDate(dateToString(new Date()));
 	}, [date]);
 
 	return (

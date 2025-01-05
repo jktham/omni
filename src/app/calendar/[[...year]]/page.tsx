@@ -10,7 +10,7 @@ import { use, useEffect, useState } from "react";
 export default function Page({params}: {params: Promise<{ year: string[] | undefined }>}) {
 	const p = use(params);
 	const [year, setYear] = useState<number>(Number(p.year?.[0]) || 2025);
-	const [date, setDate] = useState<string>("2025-01-01");
+	const [date, setDate] = useState<string>("2000-01-01");
 	const [data, setData] = useState<Data>(new Map());
 
 	useEffect(() => {
