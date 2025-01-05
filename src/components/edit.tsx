@@ -26,7 +26,7 @@ export default function Edit({date}: {date: string}) {
 					{date}
 				</div>
 				<Link className={styles.next} href={`/edit/${dateOffset(date, 1)}`}>
-				<span className="material-symbols-outlined">arrow_forward_ios</span>
+					<span className="material-symbols-outlined">arrow_forward_ios</span>
 				</Link>
 			</div>
 			<div className={styles.entry}>
