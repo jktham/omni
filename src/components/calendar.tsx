@@ -28,7 +28,7 @@ export default function Calendar({year, date, data}: {year: number; date: string
 				</Link>
 			</div>
 			<div className={styles.years}>
-				{Array.from(cal).reverse().map(([y, months]) => 
+				{Array.from(cal).map(([y, months]) => 
 					<div className={styles.year} key={y}>
 						<div className={styles.months}>
 							{Array.from(months).map(([m, days]) =>
