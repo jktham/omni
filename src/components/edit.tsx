@@ -7,11 +7,25 @@ import { useEffect, useState } from "react";
 const colorScheme = ["#00000000", "#005ae0", "#00b4dd", "#ffa10a", "#ff600a", "#f50062"];
 
 export default function Edit({date}: {date: string}) {
-	const [rating, setRating] = useState<number>(0);
+	const [rating, setRating] = useState<number>(-1);
 	const [notes, setNotes] = useState<string>("");
 
+	const saveEntry = () => {
+		setLocalEntry(date, {rating: rating, notes: notes});
+	};
+
+	const deleteEntry = () => {
+		deleteLocalEntry(date);
+		setRating(-1);
+		setNotes("");
+	};
+
 	useEffect(() => {
-		const entry = getLocalEntry(date) || {rating: 0, notes: ""};
+		if (rating != -1) saveEntry();
+	});
+
+	useEffect(() => {
+		const entry = getLocalEntry(date) || {rating: -1, notes: ""};
 		setRating(entry.rating);
 		setNotes(entry.notes);
 	}, [date]);
@@ -39,8 +53,8 @@ export default function Edit({date}: {date: string}) {
 				</div>
 				<textarea className={styles.notes} value={notes} placeholder="notes" onChange={(e) => setNotes(e.target.value)}/>
 				<div className={styles.buttons}>
-					<button className={styles.delete} onClick={() => {deleteLocalEntry(date); setRating(0); setNotes("")}}>Clear</button>
-					<button className={styles.save} onClick={() => setLocalEntry(date, {rating: rating, notes: notes})}>Save</button>
+					<button className={styles.delete} onClick={() => deleteEntry()}>Delete</button>
+					<button className={styles.save} onClick={() => saveEntry()}>Save</button>
 				</div>
 			</div>
 		</div>
