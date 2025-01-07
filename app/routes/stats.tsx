@@ -1,8 +1,6 @@
-"use client";
-
-import Stats from "@/components/stats";
-import Navbar from "@/components/navbar";
-import styles from "@/styles/page.module.css";
+import Stats from "~/components/stats";
+import Navbar from "~/components/navbar";
+import styles from "~/styles/page.module.css";
 
 export default function Page() {
 	return (

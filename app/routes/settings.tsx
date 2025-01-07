@@ -1,8 +1,6 @@
-"use client";
-
-import Settings from "@/components/settings";
-import Navbar from "@/components/navbar";
-import styles from "@/styles/page.module.css";
+import Settings from "~/components/settings";
+import Navbar from "~/components/navbar";
+import styles from "~/styles/page.module.css";
 
 export default function Page() {
 	return (

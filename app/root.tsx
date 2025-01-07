@@ -1,18 +1,29 @@
-import type { Metadata } from "next";
-import "@/styles/globals.css";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node";
 
-export const metadata: Metadata = {
-	title: "Omni",
-};
+import globalStyles from "~/styles/globals.css?url";
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+export const links: LinksFunction = () => [
+	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
+	{
+		rel: "preconnect",
+		href: "https://fonts.gstatic.com",
+		crossOrigin: "anonymous",
+	},
+	{
+		rel: "stylesheet",
+		href: globalStyles,
+	},
+];
+
+export function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
 			<head>
-				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-
-				<link rel="manifest" href="manifest.json"/>
-
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<link rel="manifest" href="manifest.json" />
+				
 				<meta name="mobile-web-app-capable" content="yes"/>
 				<meta name="apple-touch-fullscreen" content="yes"/>
 				<meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -58,10 +69,18 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
 				<link rel="apple-touch-startup-image" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/10.2__iPad_portrait.png"/>
 				<link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png"/>
 				<link rel="apple-touch-startup-image" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/8.3__iPad_Mini_portrait.png"/>
+				<Meta />
+				<Links />
 			</head>
 			<body>
 				{children}
+				<ScrollRestoration />
+				<Scripts />
 			</body>
 		</html>
 	);
+}
+
+export default function App() {
+	return <Outlet />;
 }

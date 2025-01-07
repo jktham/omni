@@ -1,5 +1,5 @@
-import styles from "@/styles/settings.module.css";
-import { deleteLocalData, exportLocalData, importLocalData } from "@/utils/dataUtils";
+import styles from "~/styles/settings.module.css";
+import { deleteLocalData, exportLocalData, importLocalData } from "~/lib/dataUtils";
 
 export default function Settings() {
 	return (
