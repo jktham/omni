@@ -4,12 +4,13 @@ import { dateOffset } from "~/lib/dateUtils";
 import { useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import { colorScheme } from "~/lib/colorScheme";
+import { getDefaultTheme, getLocalTheme } from "~/lib/themeUtils";
 
 export default function Edit({date}: {date: string}) {
 	const [rating, setRating] = useState<number>(0);
 	const [notes, setNotes] = useState<string>("");
 	const [shouldSave, setShouldSave] = useState<boolean>(false);
+	const [theme, setTheme] = useState<string[]>(getDefaultTheme());
 
 	useEffect(() => {
 		if (!shouldSave) {
@@ -34,6 +35,10 @@ export default function Edit({date}: {date: string}) {
 		setNotes(entry.notes);
 	}, [date]);
 
+	useEffect(() => {
+		setTheme(getLocalTheme());
+	}, []);
+
 	return (
 		<div className={styles.edit}>
 			<div className={"titleBar"}>
@@ -49,11 +54,11 @@ export default function Edit({date}: {date: string}) {
 			</div>
 			<div className={styles.entry}>
 				<div className={styles.rating}>
-					<button className={clsx(styles.rateButton, rating == 1 && styles.active)} style={rating == 1 ? {backgroundColor: colorScheme[1]} : {}} onClick={() => {rating == 1 ? setRating(0) : setRating(1); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_very_dissatisfied</span></button>
-					<button className={clsx(styles.rateButton, rating == 2 && styles.active)} style={rating == 2 ? {backgroundColor: colorScheme[2]} : {}} onClick={() => {rating == 2 ? setRating(0) : setRating(2); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_dissatisfied</span></button>
-					<button className={clsx(styles.rateButton, rating == 3 && styles.active)} style={rating == 3 ? {backgroundColor: colorScheme[3]} : {}} onClick={() => {rating == 3 ? setRating(0) : setRating(3); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_neutral</span></button>
-					<button className={clsx(styles.rateButton, rating == 4 && styles.active)} style={rating == 4 ? {backgroundColor: colorScheme[4]} : {}} onClick={() => {rating == 4 ? setRating(0) : setRating(4); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_satisfied</span></button>
-					<button className={clsx(styles.rateButton, rating == 5 && styles.active)} style={rating == 5 ? {backgroundColor: colorScheme[5]} : {}} onClick={() => {rating == 5 ? setRating(0) : setRating(5); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_very_satisfied</span></button>
+					<button className={clsx(styles.rateButton, rating == 1 && styles.active)} style={rating == 1 ? {backgroundColor: theme[0]} : {}} onClick={() => {rating == 1 ? setRating(0) : setRating(1); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_very_dissatisfied</span></button>
+					<button className={clsx(styles.rateButton, rating == 2 && styles.active)} style={rating == 2 ? {backgroundColor: theme[1]} : {}} onClick={() => {rating == 2 ? setRating(0) : setRating(2); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_dissatisfied</span></button>
+					<button className={clsx(styles.rateButton, rating == 3 && styles.active)} style={rating == 3 ? {backgroundColor: theme[2]} : {}} onClick={() => {rating == 3 ? setRating(0) : setRating(3); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_neutral</span></button>
+					<button className={clsx(styles.rateButton, rating == 4 && styles.active)} style={rating == 4 ? {backgroundColor: theme[3]} : {}} onClick={() => {rating == 4 ? setRating(0) : setRating(4); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_satisfied</span></button>
+					<button className={clsx(styles.rateButton, rating == 5 && styles.active)} style={rating == 5 ? {backgroundColor: theme[4]} : {}} onClick={() => {rating == 5 ? setRating(0) : setRating(5); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_very_satisfied</span></button>
 				</div>
 				<textarea className={styles.notes} value={notes} placeholder="notes" onChange={(e) => {setNotes(e.target.value); setShouldSave(true);}}/>
 				<div className={styles.buttons}>

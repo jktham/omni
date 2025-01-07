@@ -4,9 +4,9 @@ import { generateCalendar, stringToDate } from "~/lib/dateUtils";
 import { useEffect, useRef } from "react";
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import { colorScheme } from "~/lib/colorScheme";
+import { getBrightness } from "~/lib/themeUtils";
 
-export default function Calendar({year, date, data}: {year: number; date: string; data: Data}) {
+export default function Calendar({year, date, data, theme}: {year: number; date: string; data: Data, theme: string[]}) {
 	const cal = generateCalendar(year);
 	const currentDay = useRef<HTMLAnchorElement>(null);
 
@@ -38,11 +38,14 @@ export default function Calendar({year, date, data}: {year: number; date: string
 									</div>
 									<div className={styles.days}>
 										{days[0] && [...Array((stringToDate(`${y}-${m}-${days[0]}`).getDay() + 6) % 7)].map((e, i) => <div className={styles.daySpacer} key={i}></div>)}
-										{days.map((d) =>
-											<Link className={clsx(styles.day, date == `${y}-${m}-${d}` && styles.current)} style={{backgroundColor: `${colorScheme[data?.get(`${y}-${m}-${d}`)?.rating || 0] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
-												{d}
-											</Link>
-										)}
+										{days.map((d) => {
+											const rating = data?.get(`${y}-${m}-${d}`)?.rating || 0;
+											return (
+												<Link className={clsx(styles.day, date == `${y}-${m}-${d}` && styles.current)} style={{backgroundColor: `${theme[rating-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
+													<p style={getBrightness(theme[rating-1] || "#00000000") > 0.7 ? {color: "#000000"} : {color: "#ffffff"}}>{d}</p>
+												</Link>
+											)
+										})}
 									</div>
 								</div>
 							)}

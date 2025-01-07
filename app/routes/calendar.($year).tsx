@@ -5,11 +5,13 @@ import { Data, getLocalData } from "~/lib/dataUtils";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { ClientLoaderFunctionArgs, useLoaderData } from "@remix-run/react";
 import { dateToString } from "~/lib/dateUtils";
+import { getDefaultTheme, getLocalTheme } from "~/lib/themeUtils";
 
 type LoaderData = {
 	year: number;
 	date: string;
 	data: Data;
+	theme: string[];
 }
 
 export async function loader({params}: LoaderFunctionArgs): Promise<LoaderData> {
@@ -17,6 +19,7 @@ export async function loader({params}: LoaderFunctionArgs): Promise<LoaderData> 
 		year: Number(params.year || new Date().getFullYear()),
 		date: "2000-01-01",
 		data: new Map(),
+		theme: getDefaultTheme(),
 	};
 }
 
@@ -26,16 +29,17 @@ export async function clientLoader({params}: ClientLoaderFunctionArgs): Promise<
 		year: Number(params.year || new Date().getFullYear()),
 		date: dateToString(new Date()),
 		data: getLocalData(),
+		theme: getLocalTheme(),
 	};
 }
 
 export default function Page() {
-	const {year, date, data} = useLoaderData<LoaderData>();
+	const {year, date, data, theme} = useLoaderData<LoaderData>();
 	
 	return (
 		<div className={styles.page}>
 			<main>
-				<Calendar year={year} date={date} data={data}></Calendar>
+				<Calendar year={year} date={date} data={data} theme={theme}></Calendar>
 			</main>
 			<Navbar></Navbar>
 		</div>
