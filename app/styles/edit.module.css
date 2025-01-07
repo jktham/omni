@@ -9,28 +9,6 @@
 	gap: 1rem;
 }
 
-.titleBar {
-	width: 100%;
-	height: 6rem;
-	min-height: 6rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-}
-
-.title {
-	font-size: 3rem;
-}
-
-.prev, .next {
-	width: 2rem;
-	height: 2rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .entry {
 	width: 100%;
 	max-width: 40rem;
@@ -59,7 +37,11 @@
 }
 
 .rateButton.active {
-	border: 1px solid var(--fg);
+	border: 1px solid var(--fg1);
+}
+
+.rateButton:active {
+	background-color: var(--bg3);
 }
 
 .rateButton > span {
@@ -80,21 +62,4 @@
 .buttons {
 	display: flex;
 	gap: 1rem;
-}
-
-.delete, .save {
-	width: 6rem;
-	height: 3rem;
-	border: none;
-	background-color: var(--bg2);
-	cursor: pointer;
-	font-size: 1rem;
-}
-
-.delete:active {
-	background-color: red;
-}
-
-.save:active {
-	background-color: green;
 }

@@ -1,20 +1,22 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
+import { Links, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
 import globalStyles from "~/styles/globals.css?url";
+import sharedStyles from "~/styles/shared.css?url";
 
 export const links: LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
-	{
-		rel: "preconnect",
-		href: "https://fonts.gstatic.com",
-		crossOrigin: "anonymous",
-	},
-	{
-		rel: "stylesheet",
-		href: globalStyles,
-	},
+	{ rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+	{ rel: "stylesheet", href: globalStyles },
+	{ rel: "stylesheet", href: sharedStyles },
 ];
+
+export const meta: MetaFunction = () => {
+	return [
+		{ title: "Omni" },
+		{ name: "description", content: "" },
+	];
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (

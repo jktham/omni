@@ -3,27 +3,27 @@ import { Data } from "~/lib/dataUtils";
 import { generateCalendar, stringToDate } from "~/lib/dateUtils";
 import { useEffect, useRef } from "react";
 import { Link } from "@remix-run/react";
-
-const colorScheme = ["#00000000", "#005ae0", "#00b4dd", "#ffa10a", "#ff600a", "#f50062"];
+import clsx from "clsx";
+import { colorScheme } from "~/lib/colorScheme";
 
 export default function Calendar({year, date, data}: {year: number; date: string; data: Data}) {
 	const cal = generateCalendar(year);
-	const activeDay = useRef<HTMLAnchorElement>(null);
+	const currentDay = useRef<HTMLAnchorElement>(null);
 
 	useEffect(() => {
-		if (activeDay.current) activeDay.current.scrollIntoView({block: "start", behavior: "smooth"});
-	});
+		if (currentDay.current) currentDay.current.scrollIntoView({block: "start", behavior: "smooth"});
+	}, [currentDay]);
 
 	return (
 		<div className={styles.calendar}>
-			<div className={styles.titleBar}>
-				<Link className={styles.prev} to={`/calendar/${year-1}`}>
+			<div className={"titleBar"}>
+				<Link className={"titleLink"} to={`/calendar/${year-1}`} prefetch="render">
 					<span className="material-symbols-outlined">arrow_back_ios</span>
 				</Link>
-				<div className={styles.title}>
+				<div className={"title"}>
 					{year}
 				</div>
-				<Link className={styles.next} to={`/calendar/${year+1}`}>
+				<Link className={"titleLink"} to={`/calendar/${year+1}`} prefetch="render">
 					<span className="material-symbols-outlined">arrow_forward_ios</span>
 				</Link>
 			</div>
@@ -39,7 +39,7 @@ export default function Calendar({year, date, data}: {year: number; date: string
 									<div className={styles.days}>
 										{days[0] && [...Array((stringToDate(`${y}-${m}-${days[0]}`).getDay() + 6) % 7)].map((e, i) => <div className={styles.daySpacer} key={i}></div>)}
 										{days.map((d) =>
-											<Link className={`${styles.day} ${date == `${y}-${m}-${d}` ? styles.active : ""}`} style={{backgroundColor: `${colorScheme[data?.get(`${y}-${m}-${d}`)?.rating || 0] || "#00000000"}`}} key={`${y}-${m}-${d}`} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? activeDay : undefined}>
+											<Link className={clsx(styles.day, date == `${y}-${m}-${d}` && styles.current)} style={{backgroundColor: `${colorScheme[data?.get(`${y}-${m}-${d}`)?.rating || 0] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
 												{d}
 											</Link>
 										)}

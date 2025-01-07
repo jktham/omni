@@ -19,7 +19,7 @@
 	overflow: hidden;
 }
 
-.navlink.active {
+.navlink:active {
 	background-color: var(--bg3);
 }
 

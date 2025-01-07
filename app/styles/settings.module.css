@@ -9,20 +9,6 @@
 	gap: 1rem;
 }
 
-.titleBar {
-	width: 100%;
-	height: 6rem;
-	min-height: 6rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-}
-
-.title {
-	font-size: 3rem;
-}
-
 .section {
 	width: 100%;
 	max-width: 40rem;
@@ -35,17 +21,4 @@
 .sectionTitle {
 	font-size: 1rem;
 	margin-right: auto;
-}
-
-.import, .export, .delete {
-	width: 8rem;
-	height: 3rem;
-	border: none;
-	background-color: var(--bg2);
-	cursor: pointer;
-	font-size: 1rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
 }
