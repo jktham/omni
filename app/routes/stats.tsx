@@ -1,8 +1,34 @@
+import { useLoaderData } from "@remix-run/react";
+import MoodGraph from "~/components/moodGraph";
 import Navbar from "~/components/navbar";
+import { Data, getLocalData } from "~/lib/data";
+import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/page.css";
 import "~/styles/stats.css";
 
+type LoaderData = {
+	data: Data;
+	theme: string[];
+}
+
+export async function loader(): Promise<LoaderData> {
+	return {
+		data: new Map(),
+		theme: getDefaultTheme(),
+	};
+}
+
+clientLoader.hydrate = true;
+export async function clientLoader(): Promise<LoaderData> {
+	return {
+		data: getLocalData(),
+		theme: getLocalTheme(),
+	};
+}
+
 export default function Page() {
+	const {data, theme} = useLoaderData<LoaderData>();
+
 	return (
 		<div className="page">
 			<div className="titleBar">
@@ -12,7 +38,7 @@ export default function Page() {
 			</div>
 			<main>
 				<div className="stats">
-
+					<MoodGraph data={data} theme={theme}></MoodGraph>
 				</div>
 			</main>
 			<Navbar></Navbar>

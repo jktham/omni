@@ -7,7 +7,7 @@ import { getBrightness } from "~/lib/theme";
 import "~/styles/calendar.css";
 
 export default function Calendar({year, date, data, theme}: {year: number; date: string; data: Data, theme: string[]}) {
-	const cal = generateCalendar(year);
+	const cal = generateCalendar(year, year+1);
 	const currentDay = useRef<HTMLAnchorElement>(null);
 
 	useEffect(() => {

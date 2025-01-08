@@ -15,13 +15,18 @@ export function dateOffset(dateString: string, offset: number) {
 	return dateToString(date);
 }
 
-export function generateCalendar(startYear: number, endYear?: number) {
+export function listDates(startDate: string, endDate: string) {
 	const days: string[] = [];
-	const date = new Date(startYear, 0);
-	while (date.getFullYear() <= (endYear || startYear)) {
+	const date = stringToDate(startDate);
+	while (dateToString(date) != endDate && days.length < 10000) {
 		days.push(dateToString(date));
 		date.setDate(date.getDate() + 1);
 	}
+	return days;
+}
+
+export function generateCalendar(startYear: number, endYear: number) {
+	const days = listDates(`${startYear}-01-01`, `${endYear}-01-01`);
 	const cal: Map<string, Map<string, string[]>> = new Map();
 	for (const day of days) {
 		const y = day.split("-")[0];
