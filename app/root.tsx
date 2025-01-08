@@ -3,6 +3,7 @@ import type { LinksFunction } from "@remix-run/node";
 
 import globalStyles from "~/styles/globals.css?url";
 import sharedStyles from "~/styles/shared.css?url";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -19,6 +20,16 @@ export const meta: MetaFunction = () => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	useEffect(() => {
+		navigator?.storage?.persisted().then((res) => {
+			if (!res) {
+				navigator?.storage?.persist().then((res) => {
+					console.log(res);
+				});
+			}
+		})
+	})
+
 	return (
 		<html lang="en">
 			<head>
