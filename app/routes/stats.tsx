@@ -1,12 +1,19 @@
-import Stats from "~/components/stats";
 import Navbar from "~/components/navbar";
-import styles from "~/styles/page.module.css";
+import "~/styles/page.css";
+import "~/styles/stats.css";
 
 export default function Page() {
 	return (
-		<div className={styles.page}>
+		<div className="page">
+			<div className="titleBar">
+				<div className="title">
+					Stats
+				</div>
+			</div>
 			<main>
-				<Stats></Stats>
+				<div className="stats">
+
+				</div>
 			</main>
 			<Navbar></Navbar>
 		</div>

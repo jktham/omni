@@ -1,10 +1,10 @@
-import styles from "~/styles/calendar.module.css";
-import { Data } from "~/lib/dataUtils";
-import { generateCalendar, stringToDate } from "~/lib/dateUtils";
-import { useEffect, useRef } from "react";
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import { getBrightness } from "~/lib/themeUtils";
+import { useEffect, useRef } from "react";
+import { Data } from "~/lib/data";
+import { generateCalendar, stringToDate } from "~/lib/date";
+import { getBrightness } from "~/lib/theme";
+import "~/styles/calendar.css";
 
 export default function Calendar({year, date, data, theme}: {year: number; date: string; data: Data, theme: string[]}) {
 	const cal = generateCalendar(year);
@@ -15,33 +15,22 @@ export default function Calendar({year, date, data, theme}: {year: number; date:
 	}, [currentDay]);
 
 	return (
-		<div className={styles.calendar}>
-			<div className={"titleBar"}>
-				<Link className={"titleLink"} to={`/calendar/${year-1}`} prefetch="render">
-					<span className="material-symbols-outlined">arrow_back_ios</span>
-				</Link>
-				<div className={"title"}>
-					{year}
-				</div>
-				<Link className={"titleLink"} to={`/calendar/${year+1}`} prefetch="render">
-					<span className="material-symbols-outlined">arrow_forward_ios</span>
-				</Link>
-			</div>
-			<div className={styles.years}>
+		<div className="calendar">
+			<div className="years">
 				{Array.from(cal).map(([y, months]) => 
-					<div className={styles.year} key={y}>
-						<div className={styles.months}>
+					<div className="year" key={y}>
+						<div className="months">
 							{Array.from(months).map(([m, days]) =>
-								<div className={styles.month} key={m}>
-									<div className={styles.monthTitle}>
+								<div className="month" key={m}>
+									<div className="monthTitle">
 										{m}
 									</div>
-									<div className={styles.days}>
-										{days[0] && [...Array((stringToDate(`${y}-${m}-${days[0]}`).getDay() + 6) % 7)].map((e, i) => <div className={styles.daySpacer} key={i}></div>)}
+									<div className="days">
+										{days[0] && [...Array((stringToDate(`${y}-${m}-${days[0]}`).getDay() + 6) % 7)].map((e, i) => <div className="daySpacer" key={i}></div>)}
 										{days.map((d) => {
 											const rating = data?.get(`${y}-${m}-${d}`)?.rating || 0;
 											return (
-												<Link className={clsx(styles.day, date == `${y}-${m}-${d}` && styles.current)} style={{backgroundColor: `${theme[rating-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
+												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: `${theme[rating-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
 													<p style={getBrightness(theme[rating-1] || "#00000000") > 0.7 ? {color: "#000000"} : {color: "#ffffff"}}>{d}</p>
 												</Link>
 											)

@@ -1,4 +1,4 @@
-import { dateToString } from "~/lib/dateUtils";
+import { dateToString } from "~/lib/date";
 
 export type Entry = {
 	rating: number;

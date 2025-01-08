@@ -1,9 +1,9 @@
-import Edit from "~/components/edit";
-import Navbar from "~/components/navbar";
-import styles from "~/styles/page.module.css";
-import { dateToString } from "~/lib/dateUtils";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { ClientLoaderFunctionArgs, useLoaderData } from "@remix-run/react";
+import { ClientLoaderFunctionArgs, Link, useLoaderData } from "@remix-run/react";
+import Entry from "~/components/entry";
+import Navbar from "~/components/navbar";
+import { dateOffset, dateToString } from "~/lib/date";
+import "~/styles/page.css";
 
 type LoaderData = {
 	date: string;
@@ -26,9 +26,20 @@ export default function Page() {
 	const {date} = useLoaderData<LoaderData>();
 
 	return (
-		<div className={styles.page}>
+		<div className="page">
+			<div className="titleBar">
+				<Link className="titleLink" to={`/edit/${dateOffset(date, -1)}`} prefetch="render">
+					<span className="material-symbols-outlined">arrow_back_ios</span>
+				</Link>
+				<div className="title">
+					{date}
+				</div>
+				<Link className="titleLink" to={`/edit/${dateOffset(date, 1)}`} prefetch="render">
+					<span className="material-symbols-outlined">arrow_forward_ios</span>
+				</Link>
+			</div>
 			<main>
-				<Edit date={date}></Edit>
+				<Entry date={date}></Entry>
 			</main>
 			<Navbar></Navbar>
 		</div>

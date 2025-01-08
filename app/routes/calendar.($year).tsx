@@ -1,11 +1,11 @@
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { ClientLoaderFunctionArgs, Link, useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/calendar";
 import Navbar from "~/components/navbar";
-import styles from "~/styles/page.module.css";
-import { Data, getLocalData } from "~/lib/dataUtils";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { ClientLoaderFunctionArgs, useLoaderData } from "@remix-run/react";
-import { dateToString } from "~/lib/dateUtils";
-import { getDefaultTheme, getLocalTheme } from "~/lib/themeUtils";
+import { Data, getLocalData } from "~/lib/data";
+import { dateToString } from "~/lib/date";
+import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
+import "~/styles/page.css";
 
 type LoaderData = {
 	year: number;
@@ -37,7 +37,18 @@ export default function Page() {
 	const {year, date, data, theme} = useLoaderData<LoaderData>();
 	
 	return (
-		<div className={styles.page}>
+		<div className="page">
+			<div className="titleBar">
+				<Link className="titleLink" to={`/calendar/${year-1}`} prefetch="render">
+					<span className="material-symbols-outlined">arrow_back_ios</span>
+				</Link>
+				<div className="title">
+					{year}
+				</div>
+				<Link className="titleLink" to={`/calendar/${year+1}`} prefetch="render">
+					<span className="material-symbols-outlined">arrow_forward_ios</span>
+				</Link>
+			</div>
 			<main>
 				<Calendar year={year} date={date} data={data} theme={theme}></Calendar>
 			</main>
