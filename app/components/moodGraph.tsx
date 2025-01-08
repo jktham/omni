@@ -1,4 +1,4 @@
-import { CategoryScale, Chart as ChartJS, LinearScale, LineElement, PointElement, Title, Tooltip } from "chart.js";
+import { CategoryScale, Chart as ChartJS, LinearScale, LineElement, PointElement, Title, Tooltip } from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 import { Data } from "~/lib/data";
 import { dateOffset, listDates } from "~/lib/date";
@@ -66,7 +66,9 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 					responsive: true,
 					maintainAspectRatio: false,
 					plugins: {
-
+						legend: {
+							display: false,
+						}
 					}
 				}}
 			/>
