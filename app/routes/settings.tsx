@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Icon from "~/components/icon";
 import Navbar from "~/components/navbar";
-import { deleteLocalData, exportLocalData, importLocalData } from "~/lib/data";
+import { deleteLocalData, exportLocalData, importLocalData, setLocalDataDemo } from "~/lib/data";
 import { getBrightness, getDefaultTheme, getLocalTheme, getLocalThemeName, setLocalTheme, themes } from "~/lib/theme";
 import "~/styles/page.css";
 import "~/styles/settings.css";
@@ -49,6 +49,7 @@ export default function Page() {
 						<button className="btn" onClick={() => importLocalData()}>Import<Icon>upload</Icon></button>
 						<button className="btn" onClick={() => exportLocalData()}>Export<Icon>download</Icon></button>
 						<button className="btn" onClick={() => deleteLocalData()}>Delete<Icon>delete</Icon></button>
+						<button className="btn" onClick={() => setLocalDataDemo()}>Demo<Icon>star</Icon></button>
 					</div>
 					<div className="section">
 						<div className="sectionTitle">Storage</div>

@@ -88,9 +88,11 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 						x: {
 							ticks: {
 								color: "#ffffff",
-								maxRotation: 30,
-								minRotation: 30,
+								maxRotation: 40,
+								minRotation: 40,
 								display: true,
+								labelOffset: 10,
+								autoSkipPadding: 10,
 							},
 							grid: {
 								display: false,

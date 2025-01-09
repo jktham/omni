@@ -1,4 +1,4 @@
-import { dateToString } from "~/lib/date";
+import { dateOffset, dateToString, listDates } from "~/lib/date";
 
 export type Entry = {
 	rating: number;
@@ -71,5 +71,24 @@ export function exportLocalData() {
 export function deleteLocalData() {
 	if (confirm("delete local data?")) {
 		localStorage.removeItem("data");
+	}
+}
+
+export function setLocalDataDemo() {
+	if (confirm("overwrite local data?")) {
+		const demoData: Data = new Map();
+
+		const today = dateToString(new Date());
+		const dates = listDates(dateOffset(today, -700), dateOffset(today, 1));
+
+		for (const date of dates) {
+			const entry: Entry = {
+				rating: Math.floor(Math.random() * 6),
+				notes: "asdf",
+			}
+			demoData.set(date, entry);
+		}
+
+		localStorage.setItem("data", JSON.stringify(Array.from(demoData.entries())));
 	}
 }
