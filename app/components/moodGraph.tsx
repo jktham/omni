@@ -62,8 +62,8 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 		<div className="moodGraph">
 			<div className="controls">
 				<div className="graphTitle">Mood</div>
-				<button className="btn graphButton" onClick={() => setOffset(offset - range)}><Icon>arrow_back_ios</Icon></button>
-				<button className="btn graphButton" onClick={() => setOffset(offset + range)}><Icon>arrow_forward_ios</Icon></button>
+				<button className="btn graphButton" onClick={() => setOffset(offset - range)}><Icon>chevron_left</Icon></button>
+				<button className="btn graphButton" onClick={() => setOffset(offset + range)}><Icon>chevron_right</Icon></button>
 				<button className="btn graphButton" onClick={() => {cycleRange(); setOffset(0)}}>{range}</button>
 			</div>
 			<Chart className="chart"

@@ -27,10 +27,6 @@
 		min-width: 0;
 	}
 
-	.graphButton > .icon {
-		font-size: 1rem;
-	}
-
 	.chart {
 		width: 100%;
 		height: 20rem;
