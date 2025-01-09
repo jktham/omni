@@ -4,6 +4,7 @@ import Navbar from "~/components/navbar";
 import { dateOffset, dateToString } from "~/lib/date";
 import "~/styles/page.css";
 import type { Route } from "./+types/edit";
+import Icon from "~/components/icon";
 
 type LoaderData = {
 	date: string;
@@ -29,13 +30,13 @@ export default function Page() {
 		<div className="page">
 			<div className="titleBar">
 				<Link className="titleLink" to={`/edit/${dateOffset(date, -1)}`} prefetch="render">
-					<span className="material-symbols-outlined">arrow_back_ios</span>
+					<Icon>arrow_back_ios</Icon>
 				</Link>
 				<div className="title">
 					{date}
 				</div>
 				<Link className="titleLink" to={`/edit/${dateOffset(date, 1)}`} prefetch="render">
-					<span className="material-symbols-outlined">arrow_forward_ios</span>
+					<Icon>arrow_forward_ios</Icon>
 				</Link>
 			</div>
 			<main>

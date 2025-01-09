@@ -6,6 +6,7 @@ import { dateToString } from "~/lib/date";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/page.css";
 import type { Route } from "./+types/calendar";
+import Icon from "~/components/icon";
 
 type LoaderData = {
 	year: number;
@@ -40,13 +41,13 @@ export default function Page() {
 		<div className="page">
 			<div className="titleBar">
 				<Link className="titleLink" to={`/calendar/${year-1}`} prefetch="render">
-					<span className="material-symbols-outlined">arrow_back_ios</span>
+					<Icon>arrow_back_ios</Icon>
 				</Link>
 				<div className="title">
 					{year}
 				</div>
 				<Link className="titleLink" to={`/calendar/${year+1}`} prefetch="render">
-					<span className="material-symbols-outlined">arrow_forward_ios</span>
+					<Icon>arrow_forward_ios</Icon>
 				</Link>
 			</div>
 			<main>

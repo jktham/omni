@@ -12,8 +12,8 @@
 	gap: 1rem;
 }
 
-.btn > span {
-	margin-left: auto;
+.btn > .icon {
+	margin-left: 0;
 }
 
 .btn:active {

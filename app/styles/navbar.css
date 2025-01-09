@@ -21,11 +21,11 @@
 		background-color: var(--bg3);
 	}
 
-	.navlink > span {
+	.navlink > .icon {
 		font-size: 2rem;
 	}
 
-	.navlink.active > span {
+	.navlink.active > .icon {
 		color: cornflowerblue;
 	}
 }

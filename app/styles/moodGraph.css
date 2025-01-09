@@ -1,5 +1,40 @@
 .moodGraph {
 	width: 100%;
-	height: 20rem;
 	max-width: 40rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--bg4);
+	padding: 1rem;
+	gap: 1rem;
+
+	.controls {
+		width: 100%;
+		display: flex;
+		gap: 1rem;
+	}
+
+	.graphTitle {
+		margin-right: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: 1rem;
+	}
+
+	.graphButton {
+		width: 4rem;
+		min-width: 0;
+	}
+
+	.graphButton > .icon {
+		font-size: 1rem;
+	}
+
+	.chart {
+		width: 100%;
+		height: 20rem;
+		max-width: 40rem;
+		max-height: 20rem;
+	}
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { deleteLocalEntry, getLocalEntry, setLocalEntry } from "~/lib/data";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/entry.css";
+import Icon from "./icon";
 
 export default function Entry({date}: {date: string}) {
 	const [rating, setRating] = useState<number>(0);
@@ -40,11 +41,11 @@ export default function Entry({date}: {date: string}) {
 	return (
 		<div className="entry">
 			<div className="rating">
-				<button className={clsx("rateButton", rating == 1 && "active")} style={rating == 1 ? {backgroundColor: theme[0]} : {}} onClick={() => {rating == 1 ? setRating(0) : setRating(1); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_very_dissatisfied</span></button>
-				<button className={clsx("rateButton", rating == 2 && "active")} style={rating == 2 ? {backgroundColor: theme[1]} : {}} onClick={() => {rating == 2 ? setRating(0) : setRating(2); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_dissatisfied</span></button>
-				<button className={clsx("rateButton", rating == 3 && "active")} style={rating == 3 ? {backgroundColor: theme[2]} : {}} onClick={() => {rating == 3 ? setRating(0) : setRating(3); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_neutral</span></button>
-				<button className={clsx("rateButton", rating == 4 && "active")} style={rating == 4 ? {backgroundColor: theme[3]} : {}} onClick={() => {rating == 4 ? setRating(0) : setRating(4); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_satisfied</span></button>
-				<button className={clsx("rateButton", rating == 5 && "active")} style={rating == 5 ? {backgroundColor: theme[4]} : {}} onClick={() => {rating == 5 ? setRating(0) : setRating(5); setShouldSave(true);}}><span className="material-symbols-outlined">sentiment_very_satisfied</span></button>
+				<button className={clsx("rateButton", rating == 1 && "active")} style={rating == 1 ? {backgroundColor: theme[0]} : {}} onClick={() => {rating == 1 ? setRating(0) : setRating(1); setShouldSave(true);}}><Icon>sentiment_very_dissatisfied</Icon></button>
+				<button className={clsx("rateButton", rating == 2 && "active")} style={rating == 2 ? {backgroundColor: theme[1]} : {}} onClick={() => {rating == 2 ? setRating(0) : setRating(2); setShouldSave(true);}}><Icon>sentiment_dissatisfied</Icon></button>
+				<button className={clsx("rateButton", rating == 3 && "active")} style={rating == 3 ? {backgroundColor: theme[2]} : {}} onClick={() => {rating == 3 ? setRating(0) : setRating(3); setShouldSave(true);}}><Icon>sentiment_neutral</Icon></button>
+				<button className={clsx("rateButton", rating == 4 && "active")} style={rating == 4 ? {backgroundColor: theme[3]} : {}} onClick={() => {rating == 4 ? setRating(0) : setRating(4); setShouldSave(true);}}><Icon>sentiment_satisfied</Icon></button>
+				<button className={clsx("rateButton", rating == 5 && "active")} style={rating == 5 ? {backgroundColor: theme[4]} : {}} onClick={() => {rating == 5 ? setRating(0) : setRating(5); setShouldSave(true);}}><Icon>sentiment_very_satisfied</Icon></button>
 			</div>
 			<textarea className="notes" value={notes} placeholder="notes" onChange={(e) => {setNotes(e.target.value); setShouldSave(true);}}/>
 			<div className="buttons">

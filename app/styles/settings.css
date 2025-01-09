@@ -45,6 +45,10 @@
 		background-color: var(--bg3);
 	}
 
+	.themeSelect:focus {
+		outline: none;
+	}
+
 	.themePreview {
 		display: flex;
 		align-items: center;
