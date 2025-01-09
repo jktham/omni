@@ -1,11 +1,11 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { ClientLoaderFunctionArgs, Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "react-router";
 import Calendar from "~/components/calendar";
 import Navbar from "~/components/navbar";
-import { Data, getLocalData } from "~/lib/data";
+import { type Data, getLocalData } from "~/lib/data";
 import { dateToString } from "~/lib/date";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/page.css";
+import type { Route } from "./+types/calendar";
 
 type LoaderData = {
 	year: number;
@@ -14,7 +14,7 @@ type LoaderData = {
 	theme: string[];
 }
 
-export async function loader({params}: LoaderFunctionArgs): Promise<LoaderData> {
+export async function loader({params}: Route.LoaderArgs): Promise<LoaderData> {
 	return {
 		year: Number(params.year || new Date().getFullYear()),
 		date: "2000-01-01",
@@ -23,8 +23,8 @@ export async function loader({params}: LoaderFunctionArgs): Promise<LoaderData> 
 	};
 }
 
-clientLoader.hydrate = true;
-export async function clientLoader({params}: ClientLoaderFunctionArgs): Promise<LoaderData> {
+clientLoader.hydrate = true as const;
+export async function clientLoader({params}: Route.ClientLoaderArgs): Promise<LoaderData> {
 	return {
 		year: Number(params.year || new Date().getFullYear()),
 		date: dateToString(new Date()),

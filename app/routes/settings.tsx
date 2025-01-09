@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "~/components/navbar";
-import { exportLocalData, deleteLocalData, importLocalData } from "~/lib/data";
+import { deleteLocalData, exportLocalData, importLocalData } from "~/lib/data";
 import { getBrightness, getDefaultTheme, getLocalTheme, getLocalThemeName, setLocalTheme, themes } from "~/lib/theme";
 import "~/styles/page.css";
 import "~/styles/settings.css";

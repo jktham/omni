@@ -1,22 +1,22 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { ClientLoaderFunctionArgs, Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "react-router";
 import Entry from "~/components/entry";
 import Navbar from "~/components/navbar";
 import { dateOffset, dateToString } from "~/lib/date";
 import "~/styles/page.css";
+import type { Route } from "./+types/edit";
 
 type LoaderData = {
 	date: string;
 }
 
-export async function loader({params}: LoaderFunctionArgs): Promise<LoaderData> {
+export async function loader({params}: Route.LoaderArgs): Promise<LoaderData> {
 	return {
 		date: params.date || dateToString(new Date()),
 	};
 }
 
-clientLoader.hydrate = true;
-export async function clientLoader({params}: ClientLoaderFunctionArgs): Promise<LoaderData> {
+clientLoader.hydrate = true as const;
+export async function clientLoader({params}: Route.ClientLoaderArgs): Promise<LoaderData> {
 	return {
 		date: params.date || dateToString(new Date()),
 	};

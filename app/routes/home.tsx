@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import Navbar from "~/components/navbar";
 import "~/styles/page.css";
 import "~/styles/home.css";
@@ -7,12 +7,12 @@ export async function loader() {
 	return "server " + new Date().getTime();
 }
 
-clientLoader.hydrate = true;
+clientLoader.hydrate = true as const;
 export async function clientLoader() {
 	return "client " + new Date().getTime();
 }
 
-export default function Index() {
+export default function Page() {
 	const info = useLoaderData<string>();
 
 	return (

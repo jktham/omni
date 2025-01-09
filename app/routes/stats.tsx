@@ -1,7 +1,7 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import MoodGraph from "~/components/moodGraph";
 import Navbar from "~/components/navbar";
-import { Data, getLocalData } from "~/lib/data";
+import { type Data, getLocalData } from "~/lib/data";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/page.css";
 import "~/styles/stats.css";
@@ -18,7 +18,7 @@ export async function loader(): Promise<LoaderData> {
 	};
 }
 
-clientLoader.hydrate = true;
+clientLoader.hydrate = true as const;
 export async function clientLoader(): Promise<LoaderData> {
 	return {
 		data: getLocalData(),

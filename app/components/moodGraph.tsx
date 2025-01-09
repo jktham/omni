@@ -1,6 +1,6 @@
 import { CategoryScale, Chart as ChartJS, LinearScale, LineElement, PointElement, Title, Tooltip } from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
-import { Data } from "~/lib/data";
+import { type Data } from "~/lib/data";
 import { dateOffset, listDates } from "~/lib/date";
 import "~/styles/moodGraph.css";
 

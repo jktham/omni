@@ -1,7 +1,7 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import clsx from "clsx";
 import { useEffect, useRef } from "react";
-import { Data } from "~/lib/data";
+import type { Data } from "~/lib/data";
 import { generateCalendar, stringToDate } from "~/lib/date";
 import { getBrightness } from "~/lib/theme";
 import "~/styles/calendar.css";
