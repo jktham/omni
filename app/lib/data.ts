@@ -1,8 +1,14 @@
 import { dateOffset, dateToString, listDates } from "~/lib/date";
 
+export type Tag = {
+	name: string;
+	value: number | null;
+}
+
 export type Entry = {
-	rating: number;
+	mood: number;
 	notes: string;
+	tags: Tag[];
 };
 
 export type Data = Map<string, Entry>;
@@ -83,12 +89,37 @@ export function setLocalDataDemo() {
 
 		for (const date of dates) {
 			const entry: Entry = {
-				rating: Math.floor(Math.random() * 6),
+				mood: Math.floor(Math.random() * 6),
 				notes: "asdf",
+				tags: [{
+					name: "abc",
+					value: Math.floor(Math.random() * 10),
+				}],
 			}
 			demoData.set(date, entry);
 		}
 
 		localStorage.setItem("data", JSON.stringify(Array.from(demoData.entries())));
 	}
+}
+
+export function tagsToString(tags: Tag[]) {
+	const str = tags.map((tag) => tag.value != null ? `${tag.name}: ${tag.value}` : `${tag.name}`).join(", ");
+	return str;
+}
+
+export function stringToTags(str: string) {
+	const tags: Tag[] = str.split(",").map((t) => {
+		const split = t.trim().split(":").map((t) => t.trim());
+
+		const tag: Tag = {
+			name: split[0],
+			value: Number(split[1]),
+		}
+		if (split[1] == "" || Number.isNaN(tag.value)) {
+			tag.value = null;
+		}
+		return tag;
+	});
+	return tags.filter((t) => t.name != "");
 }

@@ -28,10 +28,10 @@ export default function Calendar({year, date, data, theme}: {year: number; date:
 									<div className="days">
 										{days[0] && [...Array((stringToDate(`${y}-${m}-${days[0]}`).getDay() + 6) % 7)].map((e, i) => <div className="daySpacer" key={i}></div>)}
 										{days.map((d) => {
-											const rating = data?.get(`${y}-${m}-${d}`)?.rating || 0;
+											const mood = data?.get(`${y}-${m}-${d}`)?.mood || 0;
 											return (
-												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: `${theme[rating-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
-													<p style={getBrightness(theme[rating-1] || "#00000000") > 0.7 ? {color: "#000000"} : {color: "#ffffff"}}>{d}</p>
+												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: `${theme[mood-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
+													<p style={getBrightness(theme[mood-1] || "#00000000") > 0.7 ? {color: "#000000"} : {color: "#ffffff"}}>{d}</p>
 												</Link>
 											)
 										})}

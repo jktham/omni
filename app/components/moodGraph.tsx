@@ -29,7 +29,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 	};
 
 	const [dates, setDates] = useState<string[]>([]);
-	const [ratings, setRatings] = useState<(number|null)[]>([]);
+	const [moods, setMoods] = useState<(number|null)[]>([]);
 	const [range, setRange] = useState<number>(31);
 	const [offset, setOffset] = useState<number>(0);
 
@@ -50,12 +50,12 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			dates = dates.filter((d) => stringToDate(d) <= end && stringToDate(d) >= start);
 		}
 
-		const ratings = [];
+		const moods = [];
 		for (const date of dates) {
-			ratings.push(data.get(date)?.rating || null);
+			moods.push(data.get(date)?.mood || null);
 		}
 		setDates(dates);
-		setRatings(ratings);
+		setMoods(moods);
 	}, [data, range, offset]);
 
 	return (
@@ -72,7 +72,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 					labels: dates,
 					datasets: [{
 						label: "Mood",
-						data: ratings,
+						data: moods,
 						borderWidth: 1,
 						spanGaps: true,
 						cubicInterpolationMode: "default",

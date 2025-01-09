@@ -1,13 +1,14 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { deleteLocalEntry, getLocalEntry, setLocalEntry } from "~/lib/data";
+import { deleteLocalEntry, getLocalEntry, setLocalEntry, type Tag, type Entry, tagsToString, stringToTags } from "~/lib/data";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/entry.css";
 import Icon from "./icon";
 
 export default function Entry({date}: {date: string}) {
-	const [rating, setRating] = useState<number>(0);
+	const [mood, setMood] = useState<number>(0);
 	const [notes, setNotes] = useState<string>("");
+	const [tags, setTags] = useState<string>("");
 	const [shouldSave, setShouldSave] = useState<boolean>(false);
 	const [theme, setTheme] = useState<string[]>(getDefaultTheme());
 
@@ -17,21 +18,22 @@ export default function Entry({date}: {date: string}) {
 		}
 		setShouldSave(false);
 
-		if (rating == 0 && notes == "") {
+		if (mood == 0 && notes == "" && tags == "") {
 			deleteLocalEntry(date);
 		} else {
-			setLocalEntry(date, {rating: rating, notes: notes});
+			setLocalEntry(date, {mood: mood, notes: notes, tags: stringToTags(tags)});
 		}
 
 		return () => {
 			setShouldSave(false);
 		}
-	}, [date, shouldSave, notes, rating]);
+	}, [date, shouldSave, notes, mood, tags]);
 
 	useEffect(() => {
-		const entry = getLocalEntry(date) || {rating: 0, notes: ""};
-		setRating(entry.rating);
+		const entry: Entry = getLocalEntry(date) || {mood: 0, notes: "", tags: []};
+		setMood(entry.mood);
 		setNotes(entry.notes);
+		setTags(tagsToString(entry.tags));
 	}, [date]);
 
 	useEffect(() => {
@@ -40,17 +42,18 @@ export default function Entry({date}: {date: string}) {
 
 	return (
 		<div className="entry">
-			<div className="rating">
-				<button className={clsx("rateButton", rating == 1 && "active")} style={rating == 1 ? {backgroundColor: theme[0]} : {}} onClick={() => {rating == 1 ? setRating(0) : setRating(1); setShouldSave(true);}}><Icon>sentiment_very_dissatisfied</Icon></button>
-				<button className={clsx("rateButton", rating == 2 && "active")} style={rating == 2 ? {backgroundColor: theme[1]} : {}} onClick={() => {rating == 2 ? setRating(0) : setRating(2); setShouldSave(true);}}><Icon>sentiment_dissatisfied</Icon></button>
-				<button className={clsx("rateButton", rating == 3 && "active")} style={rating == 3 ? {backgroundColor: theme[2]} : {}} onClick={() => {rating == 3 ? setRating(0) : setRating(3); setShouldSave(true);}}><Icon>sentiment_neutral</Icon></button>
-				<button className={clsx("rateButton", rating == 4 && "active")} style={rating == 4 ? {backgroundColor: theme[3]} : {}} onClick={() => {rating == 4 ? setRating(0) : setRating(4); setShouldSave(true);}}><Icon>sentiment_satisfied</Icon></button>
-				<button className={clsx("rateButton", rating == 5 && "active")} style={rating == 5 ? {backgroundColor: theme[4]} : {}} onClick={() => {rating == 5 ? setRating(0) : setRating(5); setShouldSave(true);}}><Icon>sentiment_very_satisfied</Icon></button>
+			<div className="moodSection">
+				<button className={clsx("moodButton", mood == 1 && "active")} style={mood == 1 ? {backgroundColor: theme[0]} : {}} onClick={() => {mood == 1 ? setMood(0) : setMood(1); setShouldSave(true);}}><Icon>sentiment_very_dissatisfied</Icon></button>
+				<button className={clsx("moodButton", mood == 2 && "active")} style={mood == 2 ? {backgroundColor: theme[1]} : {}} onClick={() => {mood == 2 ? setMood(0) : setMood(2); setShouldSave(true);}}><Icon>sentiment_dissatisfied</Icon></button>
+				<button className={clsx("moodButton", mood == 3 && "active")} style={mood == 3 ? {backgroundColor: theme[2]} : {}} onClick={() => {mood == 3 ? setMood(0) : setMood(3); setShouldSave(true);}}><Icon>sentiment_neutral</Icon></button>
+				<button className={clsx("moodButton", mood == 4 && "active")} style={mood == 4 ? {backgroundColor: theme[3]} : {}} onClick={() => {mood == 4 ? setMood(0) : setMood(4); setShouldSave(true);}}><Icon>sentiment_satisfied</Icon></button>
+				<button className={clsx("moodButton", mood == 5 && "active")} style={mood == 5 ? {backgroundColor: theme[4]} : {}} onClick={() => {mood == 5 ? setMood(0) : setMood(5); setShouldSave(true);}}><Icon>sentiment_very_satisfied</Icon></button>
 			</div>
 			<textarea className="notes" value={notes} placeholder="notes" onChange={(e) => {setNotes(e.target.value); setShouldSave(true);}}/>
+			<textarea className="tags" value={tags} placeholder="tags" onChange={(e) => {setTags(e.target.value); setShouldSave(true);}}/>
 			<div className="buttons">
-				<button className="btn" onClick={() => {deleteLocalEntry(date); setRating(0); setNotes("");}}>Delete</button>
-				<button className="btn" onClick={() => setLocalEntry(date, {rating: rating, notes: notes})}>Save</button>
+				<button className="btn" onClick={() => {deleteLocalEntry(date); setMood(0); setNotes(""); setTags("");}}>Delete</button>
+				<button className="btn" onClick={() => setLocalEntry(date, {mood: mood, notes: notes, tags: stringToTags(tags)})}>Save</button>
 			</div>
 		</div>
 	);
