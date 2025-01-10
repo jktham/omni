@@ -30,7 +30,7 @@ export default function Calendar({year, date, data, theme}: {year: number; date:
 										{days.map((d) => {
 											const mood = data?.get(`${y}-${m}-${d}`)?.mood || 0;
 											return (
-												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: `${theme[mood-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render">
+												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: `${theme[mood-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render" draggable={false}>
 													<p style={getBrightness(theme[mood-1] || "#00000000") > 0.7 ? {color: "#000000"} : {color: "#ffffff"}}>{d}</p>
 												</Link>
 											)

@@ -1,0 +1,101 @@
+@media (prefers-color-scheme: dark) {
+	html {
+		color-scheme: dark;
+	}
+}
+
+:root {
+	--fg1: #ffffff;
+	--fg2: #999999;
+	--bg1: #000000;
+	--bg2: #101010;
+	--bg3: #202020;
+	--bg4: #0a0a0a;
+}
+
+html,
+body {
+	position: fixed;
+	max-width: 100dvw;
+	overflow: hidden;
+	touch-action: none;
+}
+
+body {
+	color: var(--fg1);
+	background: var(--bg1);
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	user-select: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	-webkit-user-drag: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+button {
+	color: inherit;
+	font: inherit;
+}
+
+select {
+	color: inherit;
+	text-decoration: none;
+}
+
+.btn {
+	min-width: 8rem;
+	height: 3rem;
+	border: none;
+	background-color: var(--bg2);
+	cursor: pointer;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	gap: 1rem;
+}
+
+.btn > .icon {
+	margin-left: 0;
+}
+
+.btn:active {
+	background-color: var(--bg3);
+}
+
+.titleBar {
+	width: 100%;
+	height: 4rem;
+	min-height: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.title {
+	font-size: 3rem;
+}
+
+.titleLink {
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.titleLink:active {
+	color: var(--fg2);
+}

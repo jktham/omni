@@ -52,8 +52,8 @@ export default function Entry({date}: {date: string}) {
 			<textarea className="notes" value={notes} placeholder="notes" onChange={(e) => {setNotes(e.target.value); setShouldSave(true);}}/>
 			<textarea className="tags" value={tags} placeholder="tags" onChange={(e) => {setTags(e.target.value); setShouldSave(true);}}/>
 			<div className="buttons">
-				<button className="btn" onClick={() => {deleteLocalEntry(date); setMood(0); setNotes(""); setTags("");}}>Delete</button>
-				<button className="btn" onClick={() => setLocalEntry(date, {mood: mood, notes: notes, tags: stringToTags(tags)})}>Save</button>
+				<button className="btn" onClick={() => {if (confirm("delete entry?")) {deleteLocalEntry(date); setMood(0); setNotes(""); setTags("");}}}>Delete</button>
+				{/* <button className="btn" onClick={() => setLocalEntry(date, {mood: mood, notes: notes, tags: stringToTags(tags)})}>Save</button> */}
 			</div>
 		</div>
 	);

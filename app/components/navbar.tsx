@@ -9,19 +9,19 @@ export default function Navbar() {
 
 	return (
 		<nav className="navbar">
-			<Link className={clsx("navlink", path == "home" && "active")} to="/home" prefetch="render">
+			<Link className={clsx("navlink", path == "home" && "active")} to="/home" prefetch="render" draggable={false}>
 				<Icon>home</Icon>
 			</Link>
-			<Link className={clsx("navlink", path == "calendar" && "active")} to="/calendar" prefetch="render">
+			<Link className={clsx("navlink", path == "calendar" && "active")} to="/calendar" prefetch="render" draggable={false}>
 				<Icon>calendar_month</Icon>
 			</Link>
-			<Link className={clsx("navlink", path == "edit" && "active")} to="/edit" prefetch="render">
+			<Link className={clsx("navlink", path == "edit" && "active")} to="/edit" prefetch="render" draggable={false}>
 				<Icon>edit_square</Icon>
 			</Link>
-			<Link className={clsx("navlink", path == "stats" && "active")} to="/stats" prefetch="render">
+			<Link className={clsx("navlink", path == "stats" && "active")} to="/stats" prefetch="render" draggable={false}>
 				<Icon>bar_chart</Icon>
 			</Link>
-			<Link className={clsx("navlink", path == "settings" && "active")} to="/settings" prefetch="render">
+			<Link className={clsx("navlink", path == "settings" && "active")} to="/settings" prefetch="render" draggable={false}>
 				<Icon>settings</Icon>
 			</Link>
 		</nav>

@@ -29,13 +29,13 @@ export default function Page() {
 	return (
 		<div className="page">
 			<div className="titleBar">
-				<Link className="titleLink" to={`/edit/${dateOffset(date, -1)}`} prefetch="render">
+				<Link className="titleLink" to={`/edit/${dateOffset(date, -1)}`} prefetch="render" draggable={false}>
 					<Icon>arrow_back_ios</Icon>
 				</Link>
 				<div className="title">
 					{date}
 				</div>
-				<Link className="titleLink" to={`/edit/${dateOffset(date, 1)}`} prefetch="render">
+				<Link className="titleLink" to={`/edit/${dateOffset(date, 1)}`} prefetch="render" draggable={false}>
 					<Icon>arrow_forward_ios</Icon>
 				</Link>
 			</div>
