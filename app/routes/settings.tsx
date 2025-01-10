@@ -48,8 +48,8 @@ export default function Page() {
 						<div className="sectionTitle">Data</div>
 						<button className="btn" onClick={() => importLocalData()}>Import<Icon>upload</Icon></button>
 						<button className="btn" onClick={() => exportLocalData()}>Export<Icon>download</Icon></button>
-						<button className="btn" onClick={() => deleteLocalData()}>Delete<Icon>delete</Icon></button>
-						<button className="btn" onClick={() => setLocalDataDemo()}>Demo<Icon>star</Icon></button>
+						<button className="btn" onClick={() => deleteLocalData()}>Delete</button>
+						<button className="btn" onClick={() => setLocalDataDemo()}>Demo</button>
 					</div>
 					<div className="section">
 						<div className="sectionTitle">Storage</div>

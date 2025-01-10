@@ -6,7 +6,7 @@
 
 :root {
 	--fg1: #ffffff;
-	--fg2: #999999;
+	--fg2: #888888;
 	--bg1: #000000;
 	--bg2: #101010;
 	--bg3: #202020;
@@ -72,6 +72,10 @@ select {
 
 .btn:active {
 	background-color: var(--bg3);
+}
+
+.btn:disabled {
+	color: var(--fg2);
 }
 
 .titleBar {

@@ -48,11 +48,15 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 	const [range, setRange] = useState<number>(31);
 	const [offset, setOffset] = useState<number>(0);
 	const [avgMoods, setAvgMoods] = useState<(number|null)[]>([]);
+	const [disablePrev, setDisablePrev] = useState<boolean>(false);
+	const [disableNext, setDisableNext] = useState<boolean>(false);
 
 	useEffect(() => {
 		const end = new Date();
+		end.setHours(0, 0, 0, 0);
 		end.setDate(end.getDate()+offset)
 		const start = new Date();
+		start.setHours(0, 0, 0, 0);
 		start.setDate(start.getDate()+offset-range);
 
 		const sortedKeys = Array.from(data.keys()).sort((a, b) => a.localeCompare(b));
@@ -62,7 +66,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			dates = full;
 		} else {
 			dates = listDates(dateToString(start), dateOffset(dateToString(end), 1));
-			dates = dates.filter((d) => stringToDate(d) <= end && stringToDate(d) >= start);
+			dates = dates.filter((d) => stringToDate(d) <= end && stringToDate(d) > start);
 		}
 
 		const moods = [];
@@ -72,7 +76,8 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 
 		const avgWindow = 7;
 		const avgMoods = [];
-		const last = sortedKeys[sortedKeys.length-1];
+		const last = sortedKeys[sortedKeys.length-1] || dateToString(new Date());
+		const first = sortedKeys[0] || dateToString(new Date());
 		for (let i=0; i<dates.length; i++) {
 			let sum = 0;
 			let count = 0;
@@ -84,7 +89,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 				}
 			}
 			
-			if (count == 0 || sum == 0 || dates[i].localeCompare(last) > 0) {
+			if (count == 0 || sum == 0 || dates[i].localeCompare(last) > 0 || !data.get(dates[i])?.mood) {
 				avgMoods.push(null);
 			} else {
 				avgMoods.push(sum / count);
@@ -94,14 +99,19 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 		setDates(dates);
 		setMoods(moods);
 		setAvgMoods(avgMoods);
+
+		const now = new Date();
+		now.setHours(0, 0, 0, 0);
+		setDisablePrev(range == 0 || start < stringToDate(first));
+		setDisableNext(now <= end)
 	}, [data, range, offset]);
 
 	return (
 		<div className="moodGraph">
 			<div className="controls">
 				<div className="graphTitle">Mood</div>
-				<button className="btn graphButton" onClick={() => setOffset(offset - range)}><Icon>chevron_left</Icon></button>
-				<button className="btn graphButton" onClick={() => setOffset(offset + range)}><Icon>chevron_right</Icon></button>
+				<button className="btn graphButton" onClick={() => setOffset(offset - range)} disabled={disablePrev}><Icon>chevron_left</Icon></button>
+				<button className="btn graphButton" onClick={() => setOffset(offset + range)} disabled={disableNext}><Icon>chevron_right</Icon></button>
 				<button className="btn graphButton" onClick={() => {cycleRange(range); setOffset(0)}}>{rangeLetter(range)}</button>
 			</div>
 			<Chart className="chart"
