@@ -74,7 +74,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			moods.push(data.get(date)?.mood || null);
 		}
 
-		const avgWindow = 7;
+		const avgWindow = 14;
 		const avgMoods = [];
 		const last = sortedKeys[sortedKeys.length-1] || dateToString(new Date());
 		const first = sortedKeys[0] || dateToString(new Date());
@@ -82,7 +82,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			let sum = 0;
 			let count = 0;
 			for (let j=0; j<avgWindow; j++) {
-				const m = data.get(dateOffset(dates[i], -j))?.mood || 0;
+				const m = data.get(dateOffset(dates[i], Math.floor(avgWindow/2) - j))?.mood || 0;
 				if (m != 0) {
 					count += 1;
 					sum += m;
@@ -131,7 +131,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 						pointHoverRadius: 5,
 						
 					}, {
-						label: "Past week avg",
+						label: "14d avg",
 						data: avgMoods,
 						borderWidth: 1,
 						spanGaps: true,
