@@ -54,7 +54,7 @@ export default function Page() {
 					<div className="section">
 						<div className="sectionTitle">Storage</div>
 						<div className="sectionText">{persistent ? "Persistent" : "Not persistent"}</div>
-						<button className="btn" onClick={() => requestPersistence()}>Request</button>
+						<button className="btn" onClick={() => requestPersistence()} disabled={persistent}>Request</button>
 					</div>
 					<div className="section">
 						<div className="sectionTitle">Theme</div>

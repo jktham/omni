@@ -28,10 +28,22 @@ export default function Calendar({year, date, data, theme}: {year: number; date:
 									<div className="days">
 										{days[0] && [...Array((stringToDate(`${y}-${m}-${days[0]}`).getDay() + 6) % 7)].map((e, i) => <div className="daySpacer" key={i}></div>)}
 										{days.map((d) => {
-											const mood = data?.get(`${y}-${m}-${d}`)?.mood || 0;
+											const mood = data?.get(`${y}-${m}-${d}`)?.mood;
+											let bg = "";
+											let fg = "";
+											if (mood == undefined) {
+												bg = "#00000000";
+												fg = "#aaaaaa";
+											} else if (mood == 0) {
+												bg = "#00000000";
+												fg = "#ffffff";
+											} else {
+												bg = theme[mood-1];
+												fg = getBrightness(bg) > 0.7 ? "#000000" : "#ffffff";
+											}
 											return (
-												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: `${theme[mood-1] || "#00000000"}`}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render" draggable={false}>
-													<p style={getBrightness(theme[mood-1] || "#00000000") > 0.7 ? {color: "#000000"} : {color: "#ffffff"}}>{d}</p>
+												<Link className={clsx("day", date == `${y}-${m}-${d}` && "current")} style={{backgroundColor: bg}} key={d} to={`/edit/${y}-${m}-${d}`} ref={date == `${y}-${m}-${d}` ? currentDay : undefined} prefetch="render" draggable={false}>
+													<p style={{color: fg}}>{d}</p>
 												</Link>
 											)
 										})}

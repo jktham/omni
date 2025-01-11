@@ -138,6 +138,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 						showLine: true,
 						pointStyle: false,
 						borderDash: [2],
+						order: -1,
 					}]
 				}}
 				options={{
@@ -150,7 +151,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 								maxRotation: 40,
 								minRotation: 40,
 								display: true,
-								labelOffset: 10,
+								align: "end",
 								autoSkipPadding: 10,
 							},
 							grid: {
