@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router";
 import MoodGraph from "~/components/moodGraph";
 import Navbar from "~/components/navbar";
+import TagsGraph from "~/components/tagsGraph";
 import { type Data, getLocalData } from "~/lib/data";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import "~/styles/page.css";
@@ -39,6 +40,7 @@ export default function Page() {
 			<main>
 				<div className="stats">
 					<MoodGraph data={data} theme={theme}></MoodGraph>
+					<TagsGraph data={data} theme={theme}></TagsGraph>
 				</div>
 			</main>
 			<Navbar></Navbar>

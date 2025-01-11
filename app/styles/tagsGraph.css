@@ -1,0 +1,58 @@
+.tagsGraph {
+	width: 100%;
+	max-width: 40rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--bg4);
+	padding: 1rem;
+	gap: 1rem;
+
+	.controls {
+		width: 100%;
+		display: flex;
+		gap: 1rem;
+	}
+
+	.graphTitle {
+		margin-right: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: 1rem;
+	}
+
+	.graphSelect {
+		appearance: none;
+		width: 6rem;
+		height: 3rem;
+		border: none;
+		background-color: var(--bg2);
+		font-size: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-left: 1rem;
+		margin-right: auto;
+	}
+
+	.graphSelect:active {
+		background-color: var(--bg3);
+	}
+
+	.graphSelect:focus {
+		outline: none;
+	}
+
+	.graphButton {
+		width: 3rem;
+		min-width: 0;
+	}
+
+	.chart {
+		width: 100%;
+		height: 20rem;
+		max-width: 40rem;
+		max-height: 20rem;
+	}
+}

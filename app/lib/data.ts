@@ -96,6 +96,12 @@ export function setLocalDataDemo() {
 					value: Math.floor(Math.random() * 10),
 				}],
 			}
+			if (Math.random() > 0.9) {
+				entry.tags.push({
+					name: "t",
+					value: null,
+				})
+			}
 			demoData.set(date, entry);
 		}
 

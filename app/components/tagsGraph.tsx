@@ -1,8 +1,8 @@
-import { CategoryScale, Chart as ChartJS, LinearScale, LineElement, PointElement, Title, Tooltip } from "chart.js/auto";
+import { BarElement, CategoryScale, Chart as ChartJS, LinearScale, LineElement, PointElement, Title, Tooltip } from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 import { type Data } from "~/lib/data";
 import { dateOffset, dateToString, listDates, stringToDate } from "~/lib/date";
-import "~/styles/moodGraph.css";
+import "~/styles/tagsGraph.css";
 import Icon from "./icon";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -10,13 +10,12 @@ import { useNavigate } from "react-router";
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
-	PointElement,
-	LineElement,
+	BarElement,
 	Title,
 	Tooltip,
 );
 
-export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) {
+export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) {
 	const navigate = useNavigate();
 
 	const cycleRange = (r: number) => {
@@ -43,13 +42,24 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 		}
 	};
 
+
 	const [dates, setDates] = useState<string[]>([]);
-	const [moods, setMoods] = useState<(number|null)[]>([]);
+	const [uniqueTagNames, setUniqueTagNames] = useState<string[]>([])
+	const [tagName, setTagName] = useState<string>("");
+	const [tagValues, setTagValues] = useState<(number|null)[]>([]);
 	const [range, setRange] = useState<number>(31);
 	const [offset, setOffset] = useState<number>(0);
-	const [avgMoods, setAvgMoods] = useState<(number|null)[]>([]);
 	const [disablePrev, setDisablePrev] = useState<boolean>(false);
 	const [disableNext, setDisableNext] = useState<boolean>(false);
+
+	useEffect(() => {
+		const uniqueTagNames = Array.from(new Set(Array.from(data.values()).map((entry) => {
+			return entry.tags.map((t) => t.name);
+		}).flat())).sort();
+		setUniqueTagNames(uniqueTagNames);
+		setTagName(uniqueTagNames[0])
+
+	}, [data]);
 
 	useEffect(() => {
 		const end = new Date();
@@ -69,76 +79,51 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			dates = dates.filter((d) => stringToDate(d) <= end && stringToDate(d) > start);
 		}
 
-		const moods = [];
-		for (const date of dates) {
-			moods.push(data.get(date)?.mood || null);
-		}
-
-		const avgWindow = 14;
-		const avgMoods = [];
 		const last = sortedKeys[sortedKeys.length-1] || dateToString(new Date());
 		const first = sortedKeys[0] || dateToString(new Date());
-		for (let i=0; i<dates.length; i++) {
-			let sum = 0;
-			let count = 0;
-			for (let j=0; j<avgWindow; j++) {
-				const m = data.get(dateOffset(dates[i], Math.floor(avgWindow/2) - j))?.mood || 0;
-				if (m != 0) {
-					count += 1;
-					sum += m;
-				}
-			}
-			
-			if (count == 0 || sum == 0 || dates[i].localeCompare(last) > 0 || !data.get(dates[i])?.mood) {
-				avgMoods.push(null);
+
+		const tagValues = [];
+		for (const date of dates) {
+			const t = data.get(date)?.tags?.find((t) => t.name == tagName);
+			if (!t) {
+				tagValues.push(null);
 			} else {
-				avgMoods.push(sum / count);
+				tagValues.push(t.value ?? 1);
 			}
 		}
 
 		setDates(dates);
-		setMoods(moods);
-		setAvgMoods(avgMoods);
+		setTagValues(tagValues);
 
 		const now = new Date();
 		now.setHours(0, 0, 0, 0);
 		setDisablePrev(range == 0 || start < stringToDate(first));
 		setDisableNext(now <= end)
-	}, [data, range, offset]);
+	}, [data, range, offset, tagName]);
+
 
 	return (
-		<div className="moodGraph">
+		<div className="tagsGraph">
 			<div className="controls">
-				<div className="graphTitle">Mood</div>
+				<select className="graphSelect" value={tagName} onChange={(e) => setTagName(e.target.value)}>
+					{uniqueTagNames.map((n) => <option value={n} key={n}>{n}</option>)}
+				</select>
 				<button className="btn graphButton" onClick={() => setOffset(offset - range)} disabled={disablePrev}><Icon>chevron_left</Icon></button>
 				<button className="btn graphButton" onClick={() => setOffset(offset + range)} disabled={disableNext}><Icon>chevron_right</Icon></button>
 				<button className="btn graphButton" onClick={() => {cycleRange(range); setOffset(0)}}>{rangeLetter(range)}</button>
 			</div>
 			<Chart className="chart"
-				type="line"
+				type="bar"
 				data={{
 					labels: dates,
 					datasets: [{
-						label: "Mood",
-						data: moods,
-						borderWidth: 0,
-						spanGaps: true,
-						pointBackgroundColor: (ctx) => {
-							return theme[Number(ctx.dataset.data[ctx.dataIndex]) - 1];
+						label: tagName,
+						data: tagValues,
+						backgroundColor: (ctx) => {
+							const d = dates[ctx.dataIndex];
+							const e = data.get(d);
+							return theme[(e?.mood || 0) - 1] || "#222222";
 						},
-						showLine: false,
-						pointRadius: 4,
-						pointHoverRadius: 5,
-						
-					}, {
-						label: "14d avg",
-						data: avgMoods,
-						borderWidth: 1,
-						spanGaps: true,
-						showLine: true,
-						pointStyle: false,
-						borderDash: [2],
-						order: -1,
 					}]
 				}}
 				options={{
@@ -161,13 +146,10 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 						y: {
 							ticks: {
 								color: "#ffffff",
-								stepSize: 1,
 							},
 							grid: {
-								color: theme,
+								
 							},
-							suggestedMin: 1,
-							suggestedMax: 5,
 						}
 					},
 					responsive: true,
