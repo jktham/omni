@@ -122,7 +122,7 @@ export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) 
 						backgroundColor: (ctx) => {
 							const d = dates[ctx.dataIndex];
 							const e = data.get(d);
-							return theme[(e?.mood || 0) - 1] || "#222222";
+							return theme[(e?.mood || 0) - 1] || "#303030";
 						},
 					}]
 				}}

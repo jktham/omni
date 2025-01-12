@@ -4,8 +4,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background-color: var(--bg4);
-	padding: 1rem;
+	/* background-color: var(--bg4); */
+	/* padding: 1rem; */
 	gap: 1rem;
 
 	.controls {
