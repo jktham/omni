@@ -164,7 +164,7 @@ export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) 
 					},
 					responsive: true,
 					maintainAspectRatio: true,
-					aspectRatio: 1.5,
+					aspectRatio: 1.6,
 					plugins: {
 						legend: {
 							display: false,
