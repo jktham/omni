@@ -6,6 +6,7 @@ import "~/styles/moodGraph.css";
 import Icon from "./icon";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import 'chartjs-adapter-date-fns';
 
 ChartJS.register(
 	CategoryScale,
@@ -120,11 +121,14 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 					labels: dates,
 					datasets: [{
 						label: "Mood",
-						data: moods,
+						data: moods.map((m, i) => {return {x: stringToDate(dates[i]).getTime(), y: m}}),
 						borderWidth: 0,
 						spanGaps: true,
 						pointBackgroundColor: (ctx) => {
-							return theme[Number(ctx.dataset.data[ctx.dataIndex]) - 1];
+							const d = ctx.dataset.data[ctx.dataIndex];
+							if (typeof d != "number") {
+								return theme[Number(d?.y) - 1];
+							}
 						},
 						showLine: false,
 						pointRadius: 4,
@@ -132,7 +136,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 						
 					}, {
 						label: "14d avg",
-						data: avgMoods,
+						data: avgMoods.map((m, i) => {return {x: stringToDate(dates[i]).getTime(), y: m}}),
 						borderWidth: 1,
 						spanGaps: true,
 						showLine: true,
@@ -146,16 +150,21 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 					borderColor: "#ffffff",
 					scales: {
 						x: {
+							type: "time",
+							time: {
+								unit: range == 0 ? "year" : range == 7 ? "day" : "month",
+								tooltipFormat: "yyyy-MM-dd",
+								isoWeekday: true,
+							},
 							ticks: {
 								color: "#ffffff",
-								maxRotation: 40,
-								minRotation: 40,
 								display: true,
-								align: "end",
-								autoSkipPadding: 10,
 							},
 							grid: {
-								display: false,
+								display: true,
+								color: (ctx, options) => {
+									return new Date(ctx?.tick?.value).getDate() == 1 ? "#202020" : "#000000";
+								},
 							}
 						},
 						y: {

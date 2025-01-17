@@ -6,6 +6,7 @@ import "~/styles/tagsGraph.css";
 import Icon from "./icon";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import 'chartjs-adapter-date-fns';
 
 ChartJS.register(
 	CategoryScale,
@@ -118,11 +119,11 @@ export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) 
 					labels: dates,
 					datasets: [{
 						label: tagName,
-						data: tagValues,
+						data: tagValues.map((v, i) => {return {x: stringToDate(dates[i]).getTime(), y: v}}),
 						backgroundColor: (ctx) => {
 							const d = dates[ctx.dataIndex];
 							const e = data.get(d);
-							return theme[(e?.mood || 0) - 1] || "#303030";
+							return theme[(e?.mood || 0) - 1] || "#404040";
 						},
 					}]
 				}}
@@ -131,17 +132,26 @@ export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) 
 					borderColor: "#ffffff",
 					scales: {
 						x: {
+							type: "time",
+							time: {
+								unit: range == 0 ? "year" : range == 7 ? "day" : "month",
+								tooltipFormat: "yyyy-MM-dd",
+								isoWeekday: true,
+							},
+							min: stringToDate(dates[0] || "2000-01-01").getTime() - 12 * 3600000,
+							max: stringToDate(dates[dates.length-1] || "2000-01-01").getTime() + 12 * 3600000,
 							ticks: {
 								color: "#ffffff",
-								maxRotation: 40,
-								minRotation: 40,
 								display: true,
-								align: "end",
-								autoSkipPadding: 10,
 							},
 							grid: {
-								display: false,
-							}
+								display: true,
+								color: (ctx, options) => {
+									return new Date(ctx?.tick?.value).getDate() == 1 ? "#202020" : "#000000";
+								},
+								offset: false,
+							},
+							offset: false,
 						},
 						y: {
 							ticks: {

@@ -85,7 +85,7 @@ export function setLocalDataDemo() {
 		const demoData: Data = new Map();
 
 		const today = dateToString(new Date());
-		const dates = listDates(dateOffset(today, -700), dateOffset(today, 1));
+		const dates = listDates(dateOffset(today, -365 * 4), dateOffset(today, 1));
 
 		for (const date of dates) {
 			const entry: Entry = {
@@ -102,7 +102,7 @@ export function setLocalDataDemo() {
 					value: null,
 				})
 			}
-			demoData.set(date, entry);
+			if (Math.random() > 0.02) demoData.set(date, entry);
 		}
 
 		localStorage.setItem("data", JSON.stringify(Array.from(demoData.entries())));
