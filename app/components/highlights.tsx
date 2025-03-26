@@ -4,8 +4,8 @@ import { dateOffset } from "~/lib/date";
 import "~/styles/highlights.css";
 
 function getDefaultHighlights(data: Data) {
-	return [
-		"log: $log('abc')",
+	let highlights = [
+		"log: $log(test)",
 		"today: $date()",
 		"avg mood past week: $avgMood(7, 0)",
 		"avg mood prev week: $avgMood(7, 7)",
@@ -14,7 +14,38 @@ function getDefaultHighlights(data: Data) {
 		"avg mood past year: $avgMood(365, 0)",
 		"avg mood prev year: $avgMood(365, 365)",
 		"avg mood all time: $avgMood(10000, 0)",
+		"days since mood 1: $daysSinceMood(1)",
+		"days since mood 2: $daysSinceMood(2)",
+		"days since mood 3: $daysSinceMood(3)",
+		"days since mood 4: $daysSinceMood(4)",
+		"days since mood 5: $daysSinceMood(5)",
 	];
+
+	let tags: string[] = [];
+	for (let [d, e] of data.entries()) {
+		tags = [...new Set([...tags, ...e.tags.map((t) => t.name)])];
+	}
+	for (let t of tags) {
+		highlights = highlights.concat([
+			`days since ${t}: $daysSinceTag(${t})`,
+			`avg ${t} past week: $avgTag(${t}, 7, 0)`,
+			`avg ${t} prev week: $avgTag(${t}, 7, 7)`,
+			`avg ${t} past month: $avgTag(${t}, 31, 0)`,
+			`avg ${t} prev month: $avgTag(${t}, 31, 31)`,
+			`avg ${t} past year: $avgTag(${t}, 365, 0)`,
+			`avg ${t} prev year: $avgTag(${t}, 365, 365)`,
+			`avg ${t} all time: $avgTag(${t}, 10000, 0)`,
+			`total ${t} past week: $totalTag(${t}, 7, 0)`,
+			`total ${t} prev week: $totalTag(${t}, 7, 7)`,
+			`total ${t} past month: $totalTag(${t}, 31, 0)`,
+			`total ${t} prev month: $totalTag(${t}, 31, 31)`,
+			`total ${t} past year: $totalTag(${t}, 365, 0)`,
+			`total ${t} prev year: $totalTag(${t}, 365, 365)`,
+			`total ${t} all time: $totalTag(${t}, 10000, 0)`,
+		]);
+	}
+
+	return highlights;
 }
 
 function parseHighlight(data: Data, date: string, h: string) {
@@ -39,11 +70,45 @@ function parseHighlight(data: Data, date: string, h: string) {
 			let avg = sum / count || 0;
 			return Math.round(avg*100)/100;
 		},
+		daysSinceMood: function (mood: number)  {
+			for (let i=0; i<10000; i++) {
+				const m = data.get(dateOffset(date, -i))?.mood || 0;
+				if (m == mood) {
+					return i;
+				}
+			}
+			return -1;
+		},
 		avgTag: function (tag: string, days: number, offset: number)  {
-			return tag;
+			let sum = 0;
+			for (let i=0; i<days; i++) {
+				const t = data.get(dateOffset(date, -i - offset))?.tags.find((t) => t.name == tag);
+				if (t) {
+					sum += t.value || 1;
+				}
+			}
+			let avg = sum / days || 0;
+			return Math.round(avg*100)/100;
+		},
+		totalTag: function (tag: string, days: number, offset: number)  {
+			let sum = 0;
+			for (let i=0; i<days; i++) {
+				const t = data.get(dateOffset(date, -i - offset))?.tags.find((t) => t.name == tag);
+				if (t) {
+					sum += t.value || 1;
+				}
+			}
+			let avg = sum || 0;
+			return Math.round(avg*100)/100;
 		},
 		daysSinceTag: function (tag: string)  {
-			return tag;
+			for (let i=0; i<10000; i++) {
+				const t = data.get(dateOffset(date, -i))?.tags.find((t) => t.name == tag);
+				if (t) {
+					return i;
+				}
+			}
+			return -1;
 		},
 	}
 
@@ -91,7 +156,7 @@ export default function Highlights({date, data, highlights}: {date: string; data
 					<input type="checkbox" defaultChecked={currentHighlights.includes(h)} onChange={(e) => {e.target.checked ? setCurrentHighlights([...currentHighlights, h]) : setCurrentHighlights(currentHighlights.filter((h2) => h !== h2)); setShouldSave(true);}}></input>
 				</div>)}
 			</div>
-			<button className="btn" onClick={(e) => setEditMode(!editMode)}>Edit</button>
+			<button className="btn" onClick={(e) => setEditMode(!editMode)}>{editMode ? "Done" : "Edit"}</button>
 		</div>
 	);
 }
