@@ -129,3 +129,13 @@ export function stringToTags(str: string) {
 	});
 	return tags.filter((t) => t.name != "");
 }
+
+export function getLocalHighlights() {
+	const raw = localStorage.getItem("highlights") || "[]";
+	const highlights: string[] = JSON.parse(raw);
+	return highlights;
+}
+
+export function setLocalHighlights(highlights: string[]) {
+	localStorage.setItem("highlights", JSON.stringify(highlights));
+}
