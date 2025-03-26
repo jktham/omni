@@ -18,15 +18,15 @@ function getDefaultHighlights(data: Data) {
 }
 
 function parseHighlight(data: Data, date: string, h: string) {
-	const macros = {
-		log(s: string) {
+	const macros: { [index: string]: Function } = {
+		log: function (s: string) {
 			console.log(s);
 			return s;
 		},
-		date() {
+		date: function () {
 			return date;
 		},
-		avgMood(days: number, offset: number) {
+		avgMood: function (days: number, offset: number) {
 			let sum = 0;
 			let count = 0;
 			for (let i=0; i<days; i++) {
@@ -39,18 +39,18 @@ function parseHighlight(data: Data, date: string, h: string) {
 			let avg = sum / count || 0;
 			return Math.round(avg*100)/100;
 		},
-		avgTag(tag: string, days: number, offset: number)  {
+		avgTag: function (tag: string, days: number, offset: number)  {
 			return tag;
 		},
-		daysSinceTag(tag: string)  {
+		daysSinceTag: function (tag: string)  {
 			return tag;
 		},
 	}
 
-	let matches = h.matchAll(/\$([\w\.]*\((?:[\w"'-\.]*(?:,\s)?)*\))/gm);
+	let matches = h.matchAll(/\$([\w\.]*)\(([\w"'-\.]*)(?:,\s)?([\w"'-\.]*)(?:,\s)?([\w"'-\.]*)(?:,\s)?\)/gm);
 	for (let m of matches) {
 		try {
-			h = h.replaceAll(m[0], eval("macros." + m[1])); // funny eval
+			h = h.replaceAll(m[0], macros[m[1]](m[2], m[3], m[4]));
 		} catch(e) {
 			console.log(e);
 		}
