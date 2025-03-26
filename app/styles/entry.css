@@ -10,12 +10,16 @@
 	.moodSection {
 		display: flex;
 		gap: 1rem;
+		width: 100%;
+		max-width: 26rem;
+		padding: 0 1rem;
 	}
 
 	.moodButton {
 		border: none;
-		width: 3rem;
-		height: 3rem;
+		width: 100%;
+		max-width: 4rem;
+		aspect-ratio: 1;
 		background-color: var(--bg2);
 		cursor: pointer;
 		font-size: 1rem;
@@ -33,7 +37,7 @@
 	}
 
 	.moodButton > .icon {
-		font-size: 2rem;
+		font-size: 2.4rem;
 	}
 
 	.notes, .tags {
