@@ -26,6 +26,6 @@
 	}
 
 	.navlink.active > .icon {
-		color: cornflowerblue;
+		color: var(--fg2);
 	}
 }

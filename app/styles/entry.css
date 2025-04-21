@@ -42,7 +42,7 @@
 	}
 
 	.notes, .tags {
-		width: 100%;
+		width: calc(100% - 2px);
 		max-width: 26rem;
 		height: 10rem;
 		font-size: 1rem;
