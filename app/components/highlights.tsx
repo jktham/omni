@@ -21,9 +21,21 @@ function getDefaultHighlights(data: Data) {
 		"days since mood 5: $daysSinceMood(5)",
 	];
 
+	for (let m of [1, 2, 3, 4, 5]) {
+		highlights = highlights.concat([
+			`days with mood ${m} past week: $daysWithMood(${m}, 7, 0)`,
+			`days with mood ${m} prev week: $daysWithMood(${m}, 7, 7)`,
+			`days with mood ${m} past month: $daysWithMood(${m}, 31, 0)`,
+			`days with mood ${m} prev month: $daysWithMood(${m}, 31, 31)`,
+			`days with mood ${m} past year: $daysWithMood(${m}, 365, 0)`,
+			`days with mood ${m} prev year: $daysWithMood(${m}, 365, 365)`,
+			`days with mood ${m} all time: $daysWithMood(${m}, 10000, 0)`,
+		]);
+	}
+
 	let tags: string[] = [];
 	for (let [d, e] of data.entries()) {
-		tags = [...new Set([...tags, ...e.tags.map((t) => t.name)])];
+		tags = [...new Set([...tags, ...e.tags.map((t) => t.name)])].sort();
 	}
 	for (let t of tags) {
 		highlights = highlights.concat([
@@ -42,12 +54,20 @@ function getDefaultHighlights(data: Data) {
 			`total ${t} past year: $totalTag(${t}, 365, 0)`,
 			`total ${t} prev year: $totalTag(${t}, 365, 365)`,
 			`total ${t} all time: $totalTag(${t}, 10000, 0)`,
+			`days with ${t} past week: $daysWithTag(${t}, 7, 0)`,
+			`days with ${t} prev week: $daysWithTag(${t}, 7, 7)`,
+			`days with ${t} past month: $daysWithTag(${t}, 31, 0)`,
+			`days with ${t} prev month: $daysWithTag(${t}, 31, 31)`,
+			`days with ${t} past year: $daysWithTag(${t}, 365, 0)`,
+			`days with ${t} prev year: $daysWithTag(${t}, 365, 365)`,
+			`days with ${t} all time: $daysWithTag(${t}, 10000, 0)`,
 		]);
 	}
 
 	return highlights;
 }
 
+// todo: slow
 function parseHighlight(data: Data, date: string, h: string) {
 	const macros: { [index: string]: Function } = {
 		log: function (s: string) {
@@ -79,6 +99,16 @@ function parseHighlight(data: Data, date: string, h: string) {
 			}
 			return -1;
 		},
+		daysWithMood: function (mood: number, days: number, offset: number)  {
+			let sum = 0;
+			for (let i=0; i<days; i++) {
+				const m = data.get(dateOffset(date, -i - offset))?.mood || 0;
+				if (m == mood) {
+					sum += 1;
+				}
+			}
+			return sum;
+		},
 		avgTag: function (tag: string, days: number, offset: number)  {
 			let sum = 0;
 			for (let i=0; i<days; i++) {
@@ -109,6 +139,16 @@ function parseHighlight(data: Data, date: string, h: string) {
 				}
 			}
 			return -1;
+		},
+		daysWithTag: function (tag: string, days: number, offset: number)  {
+			let sum = 0;
+			for (let i=0; i<days; i++) {
+				const t = data.get(dateOffset(date, -i - offset))?.tags.find((t) => t.name == tag);
+				if (t) {
+					sum += 1;
+				}
+			}
+			return sum;
 		},
 	}
 

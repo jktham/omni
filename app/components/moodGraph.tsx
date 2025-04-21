@@ -138,7 +138,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 						label: "7d avg",
 						data: avgMoods.map((m, i) => {return {x: stringToDate(dates[i]).getTime(), y: m}}),
 						borderWidth: 1,
-						spanGaps: false,
+						spanGaps: true,
 						showLine: true,
 						pointStyle: false,
 						borderDash: [2],

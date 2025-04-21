@@ -13,6 +13,7 @@
 		width: 100%;
 		max-width: 26rem;
 		padding: 0 1rem;
+		margin-top: 1px;
 	}
 
 	.moodButton {
@@ -29,7 +30,7 @@
 	}
 
 	.moodButton.active {
-		border: 1px solid var(--fg1);
+		outline: 1px solid var(--fg1);
 	}
 
 	.moodButton:active {
@@ -52,8 +53,7 @@
 	}
 
 	.notes:focus, .tags:focus {
-		outline: none;
-		border: 1px solid var(--fg1);
+		outline: 1px solid var(--fg1);
 	}
 
 	.buttons {

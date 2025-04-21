@@ -77,11 +77,12 @@ export function exportLocalData() {
 export function deleteLocalData() {
 	if (confirm("delete local data?")) {
 		localStorage.removeItem("data");
+		localStorage.removeItem("highlights");
 	}
 }
 
 export function setLocalDataDemo() {
-	if (confirm("overwrite local data?")) {
+	if (confirm("overwrite local data with demo?")) {
 		const demoData: Data = new Map();
 
 		const today = dateToString(new Date());
@@ -92,20 +93,36 @@ export function setLocalDataDemo() {
 				mood: Math.floor(Math.random() * 6),
 				notes: "asdf",
 				tags: [{
-					name: "abc",
-					value: Math.floor(Math.random() * 10),
+					name: "a",
+					value: Math.floor(Math.random() * 10) + 1,
 				}],
 			}
-			if (Math.random() > 0.9) {
+			if (Math.random() > 0.8) {
 				entry.tags.push({
-					name: "t",
+					name: "b",
 					value: null,
 				})
 			}
-			if (Math.random() > 0.02) demoData.set(date, entry);
+			if (Math.random() > 0.5) {
+				entry.tags.push({
+					name: "c",
+					value: Math.round(Math.random()*100)/100,
+				})
+			}
+			if (Math.random() > 0.01) demoData.set(date, entry);
 		}
 
 		localStorage.setItem("data", JSON.stringify(Array.from(demoData.entries())));
+
+		let highlights = [
+			"avg mood past week: $avgMood(7, 0)",
+			"avg mood prev week: $avgMood(7, 7)",
+			`avg a past month: $avgTag(a, 31, 0)`,
+			`days since b: $daysSinceTag(b)`,
+			`total c all time: $totalTag(c, 10000, 0)`,
+			`days with c past year: $daysWithTag(c, 365, 0)`,
+		];
+		setLocalHighlights(highlights);
 	}
 }
 

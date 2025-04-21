@@ -52,7 +52,7 @@ export default function Page() {
 						<button className="btn" onClick={() => setLocalDataDemo()}>Demo</button>
 					</div>
 					<div className="section">
-						<div className="sectionTitle">Storage</div>
+						<div className="sectionTitle">Local Storage</div>
 						<div className="sectionText">{persistent ? "Persistent" : "Not persistent"}</div>
 						<button className="btn" onClick={() => requestPersistence()} disabled={persistent}>Request</button>
 					</div>

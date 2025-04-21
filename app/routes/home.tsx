@@ -3,7 +3,7 @@ import Navbar from "~/components/navbar";
 import Week from "~/components/week";
 import "~/styles/page.css";
 import "~/styles/home.css";
-import { type Data, getLocalData, getLocalHighlights } from "~/lib/data";
+import { type Data, getLocalData, getLocalHighlights, setLocalDataDemo } from "~/lib/data";
 import { dateOffset, dateToString, stringToDate } from "~/lib/date";
 import { getDefaultTheme, getLocalTheme } from "~/lib/theme";
 import type { Route } from "./+types";
@@ -27,6 +27,11 @@ export async function loader({params}: Route.LoaderArgs): Promise<LoaderData> {
 
 clientLoader.hydrate = true as const;
 export async function clientLoader({params}: Route.ClientLoaderArgs): Promise<LoaderData> {
+	if (getLocalData().size == 0) {
+		if (confirm("no local data, load demo?")) {
+			setLocalDataDemo();
+		}
+	}
 	return {
 		date: dateToString(new Date()),
 		data: getLocalData(),
