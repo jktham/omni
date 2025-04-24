@@ -49,7 +49,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="manifest" href="manifest.json" />
-				
+  				<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+
 				<meta name="mobile-web-app-capable" content="yes"/>
 				<meta name="apple-touch-fullscreen" content="yes"/>
 				<meta name="apple-mobile-web-app-capable" content="yes"/>
