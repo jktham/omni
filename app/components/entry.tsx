@@ -42,6 +42,9 @@ export default function Entry({date}: {date: string}) {
 
 	return (
 		<div className="entry">
+			<div className="date">
+				{new Date(date).toLocaleDateString("en-US", {weekday: "short", year: "numeric", month: "short", day: "numeric"})}
+			</div>
 			<div className="moodSection">
 				<button className={clsx("moodButton", mood == 1 && "active")} style={mood == 1 ? {backgroundColor: theme[0]} : {}} onClick={() => {mood == 1 ? setMood(0) : setMood(1); setShouldSave(true);}}><Icon>sentiment_very_dissatisfied</Icon></button>
 				<button className={clsx("moodButton", mood == 2 && "active")} style={mood == 2 ? {backgroundColor: theme[1]} : {}} onClick={() => {mood == 2 ? setMood(0) : setMood(2); setShouldSave(true);}}><Icon>sentiment_dissatisfied</Icon></button>

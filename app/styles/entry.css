@@ -7,6 +7,10 @@
 	margin: 0 auto;
 	gap: 1rem;
 
+	.date {
+		font-size: 1.5rem;
+	}
+
 	.moodSection {
 		display: flex;
 		gap: 1rem;
