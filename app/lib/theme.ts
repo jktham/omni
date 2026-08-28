@@ -1,13 +1,13 @@
 export const themes: Map<string, string[]> = new Map([
-	["default", ["#005ae0", "#00b4dd", "#ffa10a", "#ff600a", "#f50062"]],
+	["firewatch", ["#005ae0", "#00b4dd", "#ffa10a", "#ff600a", "#f50062"]],
 	["mood", ["#9F51F2", "#8981F5", "#48B2DD", "#14D4A5", "#62D510"]],
 	["autumn", ["#003049", "#d62828", "#f77f00", "#fcbf49", "#eae2b7"]],
 	["ice", ["#03045e", "#0077b6", "#00b4d8", "#90e0ef", "#caf0f8"]],
 ]);
 
 export function getLocalTheme() {
-	const name = localStorage.getItem("theme") || "default";
-	const theme = themes.get(name) || themes.get("default")!;
+	const name = localStorage.getItem("theme") || "firewatch";
+	const theme = themes.get(name) || themes.get("firewatch")!;
 	return theme;
 }
 
@@ -16,12 +16,12 @@ export function setLocalTheme(name: string) {
 }
 
 export function getLocalThemeName() {
-	const name = localStorage.getItem("theme") || "default";
+	const name = localStorage.getItem("theme") || "firewatch";
 	return name;
 }
 
 export function getDefaultTheme() {
-	const theme = themes.get("default")!;
+	const theme = themes.get("firewatch")!;
 	return theme;
 }
 
