@@ -25,6 +25,8 @@ export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) 
 		} else if (r == 7) {
 			setRange(31);
 		} else if (r == 31) {
+			setRange(93);
+		} else if (r == 93) {
 			setRange(365);
 		} else {
 			setRange(0);
@@ -36,6 +38,8 @@ export default function TagsGraph({data, theme}: {data: Data; theme: string[]}) 
 			return "W";
 		} else if (r == 31) {
 			return "M";
+		} else if (r == 93) {
+			return "Q";
 		} else if (r == 365) {
 			return "Y";
 		} else {

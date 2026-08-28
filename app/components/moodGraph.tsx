@@ -26,6 +26,8 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 		} else if (r == 7) {
 			setRange(31);
 		} else if (r == 31) {
+			setRange(93);
+		} else if (r == 93) {
 			setRange(365);
 		} else {
 			setRange(0);
@@ -37,6 +39,8 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			return "W";
 		} else if (r == 31) {
 			return "M";
+		} else if (r == 93) {
+			return "Q";
 		} else if (r == 365) {
 			return "Y";
 		} else {
@@ -75,7 +79,7 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 			moods.push(data.get(date)?.mood || null);
 		}
 
-		const avgWindow = 7;
+		const avgWindow = range == 0 || range == 365 ? 31 : 7;
 		const avgMoods = [];
 		const last = sortedKeys[sortedKeys.length-1] || dateToString(new Date());
 		const first = sortedKeys[0] || dateToString(new Date());
@@ -96,6 +100,8 @@ export default function MoodGraph({data, theme}: {data: Data; theme: string[]}) 
 				avgMoods.push(sum / count);
 			}
 		}
+
+		console.log(avgWindow);
 
 		setDates(dates);
 		setMoods(moods);
